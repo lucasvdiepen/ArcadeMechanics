@@ -22,8 +22,6 @@ public class PlayerMovement : MonoBehaviour
         int moveDirection = 0;
 
         //Move
-        //float horizontalMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        //transform.Translate(horizontalMove, 0, 0);
 
         if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection -= 1;
 
