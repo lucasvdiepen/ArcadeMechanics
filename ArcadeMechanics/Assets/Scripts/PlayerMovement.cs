@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public float jumpForce = 5f;
+    public float wallOffset = 1f;
 
     private Rigidbody rb;
     private bool grounded = true;
@@ -21,21 +22,25 @@ public class PlayerMovement : MonoBehaviour
     {
         int moveDirection = 0;
 
-        //Move
+        Vector3 cameraLeftPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane));
 
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection -= 1;
-
+        //Get movement input
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection -= 1;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) moveDirection += 1;
 
-        if(moveDirection == -1)
+        if (transform.position.x > cameraLeftPosition.x + wallOffset || moveDirection == 1)
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-            transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
-        }
-        else if(moveDirection == 1)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
+            //Move
+            if (moveDirection == -1)
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+                transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
+            }
+            else if (moveDirection == 1)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
+            }
         }
 
         //Jump
