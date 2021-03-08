@@ -34,7 +34,7 @@ public class TerrainManager : MonoBehaviour
 
                 terrains.Add(newTerrain);
 
-                //Generate all objects in this terrain
+                //Generate obstacles in this terrain
                 FindObjectOfType<ObstacleManager>().GenerateObstacles(newTerrain.transform.position);
             }
 
@@ -44,7 +44,10 @@ public class TerrainManager : MonoBehaviour
             if (firstTerrainChilds[1].position.x + terrainOffset < cameraLeftPosition.x)
             {
                 Destroy(terrains[0]);
+
+                //Remove all obstacles in this terrain
                 FindObjectOfType<ObstacleManager>().RemoveObstaclesBetween(terrains[0].transform.position.x, firstTerrainChilds[1].position.x);
+
                 terrains.RemoveAt(0);
             }
         }
