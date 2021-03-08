@@ -44,6 +44,7 @@ public class TerrainManager : MonoBehaviour
             if (firstTerrainChilds[1].position.x + terrainOffset < cameraLeftPosition.x)
             {
                 Destroy(terrains[0]);
+                FindObjectOfType<ObstacleManager>().RemoveObstaclesBetween(terrains[0].transform.position.x, firstTerrainChilds[1].position.x);
                 terrains.RemoveAt(0);
             }
         }

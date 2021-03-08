@@ -13,6 +13,8 @@ public class ObstacleManager : MonoBehaviour
 
     private float lastObstacleX = 0f;
 
+    private List<GameObject> activeObstacles = new List<GameObject>();
+
     void Start()
     {
         SpawnObstacle();
@@ -23,6 +25,19 @@ public class ObstacleManager : MonoBehaviour
         
     }
 
+    public void RemoveObstaclesBetween(float startX, float endX)
+    {
+        for (int i = activeObstacles.Count - 1; i >= 0; i--)
+        {
+            float obstacleX = activeObstacles[i].transform.position.x;
+            if(obstacleX >= startX && obstacleX <= endX)
+            {
+                Destroy(activeObstacles[i]);
+                activeObstacles.RemoveAt(i);
+            }
+        }
+    }
+
     public void GenerateObstacles(Vector3 terrainStart)
     {
         int objectsToSpawn = Random.Range(minObstaclesSpawn, maxObstacleSpawn);
@@ -30,13 +45,13 @@ public class ObstacleManager : MonoBehaviour
 
         for(int i = 0; i < objectsToSpawn; i++)
         {
-            SpawnObstacle();
+            activeObstacles.Add(SpawnObstacle());
         }
     }
 
     private GameObject SpawnObstacle()
     {
-        int rndIndex = Random.Range(0, obstacles.Length - 1);
+        int rndIndex = Random.Range(0, obstacles.Length);
         float rndDistance = Random.Range(minObstacleDistance, maxObstacleDistance);
 
         GameObject obstacle = Instantiate(obstacles[rndIndex]);
