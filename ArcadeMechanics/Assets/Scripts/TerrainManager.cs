@@ -40,7 +40,7 @@ public class TerrainManager : MonoBehaviour
                 terrains.Add(newTerrain);
 
                 //Generate obstacles in this terrain
-                FindObjectOfType<ObstacleManager>().GenerateObstacles(newTerrain.transform.position);
+                //FindObjectOfType<ObstacleManager>().GenerateObstacles(newTerrain.transform.position);
             }
 
             //Remove terrain

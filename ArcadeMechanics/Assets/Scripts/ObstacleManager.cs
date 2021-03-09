@@ -5,24 +5,29 @@ using UnityEngine;
 public class ObstacleManager : MonoBehaviour
 {
     public GameObject[] obstacles;
+
     public float minObstacleDistance = 6f;
     public float maxObstacleDistance = 15f;
 
-    public int minObstaclesSpawn = 1;
-    public int maxObstacleSpawn = 2;
-
     private float lastObstacleX = 0f;
+
+    public float spawnObstacleOffset = 1f;
 
     private List<GameObject> activeObstacles = new List<GameObject>();
 
     void Start()
     {
-        SpawnObstacle();
+        //SpawnObstacle();
     }
 
     void Update()
     {
-        
+        Vector3 cameraRightPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+
+        if (cameraRightPosition.x >= lastObstacleX - spawnObstacleOffset)
+        {
+            SpawnObstacle();
+        }
     }
 
     public void RemoveObstaclesBetween(float startX, float endX)
@@ -38,18 +43,7 @@ public class ObstacleManager : MonoBehaviour
         }
     }
 
-    public void GenerateObstacles(Vector3 terrainStart)
-    {
-        int objectsToSpawn = Random.Range(minObstaclesSpawn, maxObstacleSpawn);
-        lastObstacleX = terrainStart.x;
-
-        for(int i = 0; i < objectsToSpawn; i++)
-        {
-            activeObstacles.Add(SpawnObstacle());
-        }
-    }
-
-    private GameObject SpawnObstacle()
+    private void SpawnObstacle()
     {
         int rndIndex = Random.Range(0, obstacles.Length);
         float rndDistance = Random.Range(minObstacleDistance, maxObstacleDistance);
@@ -58,7 +52,7 @@ public class ObstacleManager : MonoBehaviour
         obstacle.transform.position = new Vector3(lastObstacleX, obstacle.transform.position.y, obstacle.transform.position.z);
         obstacle.transform.Translate(new Vector3(rndDistance, 0, 0));
         lastObstacleX = obstacle.transform.position.x;
-        return obstacle;
+        activeObstacles.Add(obstacle);
     }
 
     public void ResetObstacles()
