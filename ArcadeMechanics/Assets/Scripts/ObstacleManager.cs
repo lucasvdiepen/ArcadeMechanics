@@ -59,5 +59,17 @@ public class ObstacleManager : MonoBehaviour
         obstacle.transform.Translate(new Vector3(rndDistance, 0, 0));
         lastObstacleX = obstacle.transform.position.x;
         return obstacle;
-    }    
+    }
+
+    public void ResetObstacles()
+    {
+        for(int i = 0; i < activeObstacles.Count; i++)
+        {
+            Destroy(activeObstacles[i]);
+        }
+
+        activeObstacles.Clear();
+
+        lastObstacleX = 0;
+    }
 }

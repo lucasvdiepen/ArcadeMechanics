@@ -480,10 +480,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70a52d19af71c949a0b374b2c4a1dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  startingSpeed: 5
   jumpForce: 7
   wallOffset: 1
   playerRunAutomatic: 0
+  startPosition: {x: 0, y: -1.58, z: -4.61}
 --- !u!54 &1256849777
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -568,7 +569,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1442038088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 125.317505, y: 598.1275, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -700,7 +701,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672970923}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6233544, y: -3.0931656, z: -7.82705}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -719,7 +720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacles:
-  - {fileID: 6963627406678998395, guid: 5c92cb8855a15dc4fb7611f2b7b1d45e, type: 3}
+  - {fileID: 8684187423963032166, guid: 5c92cb8855a15dc4fb7611f2b7b1d45e, type: 3}
   - {fileID: 2914700399611878717, guid: de665bc342be09d42937e6631934c8d2, type: 3}
   - {fileID: 3742012397494656542, guid: 765d8320d5e6d30428b7726e883bc0e5, type: 3}
   minObstacleDistance: 11
@@ -848,7 +849,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092669669}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -911,6 +912,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3068863674622133199, guid: f5469f7614fa2cd45a78ee6da4af6f8b, type: 3}
       propertyPath: m_Name
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 3068863674622133199, guid: f5469f7614fa2cd45a78ee6da4af6f8b, type: 3}
+      propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 3068863675678631014, guid: f5469f7614fa2cd45a78ee6da4af6f8b, type: 3}

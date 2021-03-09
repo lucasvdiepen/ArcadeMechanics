@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
+    public float startingSpeed = 5f;
+    private float speed = 5f;
     public float jumpForce = 5f;
     public float wallOffset = 1f;
     public bool playerRunAutomatic = false;
 
+    public Vector3 startPosition;
+
     private Rigidbody rb;
-    private bool grounded = true;
+    private bool grounded = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        speed = startingSpeed;
+        transform.position = startPosition;
     }
 
     void Update()
@@ -60,8 +66,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void ResetPlayer()
+    {
+        speed = startingSpeed;
+        transform.position = startPosition;
+        grounded = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Ground") grounded = true;
+
+        if (collision.transform.tag == "Obstacle") FindObjectOfType<GameManager>().Die();
     }
 }
