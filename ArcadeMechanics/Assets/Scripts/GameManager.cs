@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void Die()
+    {
+        ResetGame();
+    }
+
     private void ResetGame()
     {
         //Check if score is better than highscore
@@ -47,5 +52,10 @@ public class GameManager : MonoBehaviour
         //reset game
         score = 0;
         scoreText.text = "Score: " + score;
+
+        FindObjectOfType<TerrainManager>().ResetTerrain();
+        FindObjectOfType<ObstacleManager>().ResetObstacles();
+        FindObjectOfType<PlayerMovement>().ResetPlayer();
+        FindObjectOfType<CameraMovement>().ResetCamera();
     }
 }

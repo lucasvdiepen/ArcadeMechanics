@@ -8,14 +8,24 @@ public class CameraMovement : MonoBehaviour
 
     void Start()
     {
-        transform.position = new Vector3(target.position.x, 0, -10);   
+        SetCameraToTarget();
     }
 
     void LateUpdate()
     {
         if(target.position.x > transform.position.x)
         {
-            transform.position = new Vector3(target.position.x, 0, -10);
+            SetCameraToTarget();
         }
+    }
+
+    private void SetCameraToTarget()
+    {
+        transform.position = new Vector3(target.position.x, 0, -10);
+    }
+
+    public void ResetCamera()
+    {
+        SetCameraToTarget();
     }
 }

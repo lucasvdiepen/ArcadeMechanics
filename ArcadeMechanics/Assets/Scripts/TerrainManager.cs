@@ -11,8 +11,11 @@ public class TerrainManager : MonoBehaviour
 
     private List<GameObject> terrains = new List<GameObject>();
 
+    private Vector3 startPosition;
+
     void Start()
     {
+        startPosition = startTerrain.transform.position;
         terrains.Add(startTerrain);
     }
     
@@ -27,29 +30,58 @@ public class TerrainManager : MonoBehaviour
             //Add terrain
             Transform[] lastTerrainChilds = terrains[terrains.Count - 1].GetComponentsInChildren<Transform>();
 
-            if(cameraRightPosition.x - terrainOffset >= lastTerrainChilds[1].position.x)
+            Transform lastTerrainEndPoint = GetEndPoint(lastTerrainChilds);
+
+            if (cameraRightPosition.x >= lastTerrainEndPoint.position.x - terrainOffset)
             {
                 GameObject newTerrain = Instantiate(terrain);
-                newTerrain.transform.position = new Vector3(lastTerrainChilds[1].position.x, newTerrain.transform.position.y, newTerrain.transform.position.z);
+                newTerrain.transform.position = new Vector3(lastTerrainEndPoint.position.x, newTerrain.transform.position.y, newTerrain.transform.position.z);
 
                 terrains.Add(newTerrain);
 
                 //Generate obstacles in this terrain
-                FindObjectOfType<ObstacleManager>().GenerateObstacles(newTerrain.transform.position);
+                //FindObjectOfType<ObstacleManager>().GenerateObstacles(newTerrain.transform.position);
             }
 
             //Remove terrain
             Transform[] firstTerrainChilds = terrains[0].GetComponentsInChildren<Transform>();
+
+            Transform firstTerrainEndPoint = GetEndPoint(firstTerrainChilds);
           
-            if (firstTerrainChilds[1].position.x + terrainOffset < cameraLeftPosition.x)
+            if (firstTerrainEndPoint.position.x + terrainOffset < cameraLeftPosition.x)
             {
                 Destroy(terrains[0]);
 
                 //Remove all obstacles in this terrain
-                FindObjectOfType<ObstacleManager>().RemoveObstaclesBetween(terrains[0].transform.position.x, firstTerrainChilds[1].position.x);
+                FindObjectOfType<ObstacleManager>().RemoveObstaclesBetween(terrains[0].transform.position.x, firstTerrainEndPoint.position.x);
 
                 terrains.RemoveAt(0);
             }
         }
+    }
+
+    private Transform GetEndPoint(Transform[] childs)
+    {
+        foreach(Transform childTransform in childs)
+        {
+            if (childTransform.name == "EndPoint") return childTransform;
+        }
+
+        return null;
+    }
+
+    public void ResetTerrain()
+    {
+        for(int i = 0; i < terrains.Count; i++)
+        {
+            Destroy(terrains[i]);
+        }
+
+        terrains.Clear();
+
+        GameObject startingTerrain = Instantiate(terrain);
+        startingTerrain.transform.position = startPosition;
+
+        terrains.Add(startingTerrain);
     }
 }
