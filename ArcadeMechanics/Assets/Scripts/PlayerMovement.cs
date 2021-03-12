@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
         if(playerRunAutomatic)
         {
             transform.Translate(speed * Time.deltaTime, 0, 0, Space.World);
+
+            MoveBackround(1, speed);
         }
         else
         {
@@ -54,6 +56,9 @@ public class PlayerMovement : MonoBehaviour
                     transform.rotation = Quaternion.Euler(0, 0, 0);
                     transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
                 }
+
+                //Move the background
+                MoveBackround(moveDirection, speed);
             }
         }
         
@@ -63,6 +68,14 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             grounded = false;
+        }
+    }
+
+    private void MoveBackround(int moveDirection, float speed)
+    {
+        if (transform.position.x > Camera.main.transform.position.x)
+        {
+            FindObjectOfType<BackgroundManager>().MoveBackground(moveDirection, speed);
         }
     }
 
