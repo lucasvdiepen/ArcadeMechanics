@@ -60,7 +60,7 @@ public class TerrainManager : MonoBehaviour
         }
     }
 
-    private Transform GetEndPoint(Transform[] childs)
+    public static Transform GetEndPoint(Transform[] childs)
     {
         foreach(Transform childTransform in childs)
         {
