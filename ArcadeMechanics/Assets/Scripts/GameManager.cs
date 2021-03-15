@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
     public Transform player;
     public Text scoreText;
     public Text highscoreText;
+    public Canvas pauseScreen;
 
     private int score = 0;
     private int highscore = 0;
+    public bool isPaused = false;
 
     void Start()
     {
@@ -21,6 +23,27 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         GetScore();
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }    
+    }
+
+    private void Pause()
+    {
+        if(isPaused)
+        {
+            isPaused = false;
+            pauseScreen.gameObject.SetActive(false);
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            isPaused = true;
+            pauseScreen.gameObject.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 
     private void GetScore()
