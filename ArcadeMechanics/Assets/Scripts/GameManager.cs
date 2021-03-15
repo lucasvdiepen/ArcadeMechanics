@@ -58,5 +58,6 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<PlayerMovement>().ResetPlayer();
         FindObjectOfType<CameraMovement>().ResetCamera();
         FindObjectOfType<Health>().ResetHealth();
+        FindObjectOfType<BackgroundManager>().ResetBackground();
     }
 }
