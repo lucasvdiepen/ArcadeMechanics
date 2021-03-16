@@ -45,20 +45,23 @@ public class PlayerMovement : MonoBehaviour
 
             if (transform.position.x > cameraLeftPosition.x + wallOffset || moveDirection == 1)
             {
-                //Move
-                if (moveDirection == -1)
+                if(!FindObjectOfType<GameManager>().isPaused)
                 {
-                    transform.rotation = Quaternion.Euler(0, 180, 0);
-                    transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
-                }
-                else if (moveDirection == 1)
-                {
-                    transform.rotation = Quaternion.Euler(0, 0, 0);
-                    transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
-                }
+                    //Move
+                    if (moveDirection == -1)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 180, 0);
+                        transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
+                    }
+                    else if (moveDirection == 1)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 0, 0);
+                        transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
+                    }
 
-                //Move the background
-                MoveBackround(moveDirection, speed);
+                    //Move the background
+                    MoveBackround(moveDirection, speed);
+                }
             }
         }
         
