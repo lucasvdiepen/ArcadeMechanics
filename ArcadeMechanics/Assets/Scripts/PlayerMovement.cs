@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.Translate(speed * Time.deltaTime, 0, 0, Space.World);
 
-            MoveBackround(1, speed);
+            MoveBackroundAndClouds(1, speed);
         }
         else
         {
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
                     }
 
                     //Move the background
-                    MoveBackround(moveDirection, speed);
+                    MoveBackroundAndClouds(moveDirection, speed);
                 }
             }
         }
@@ -74,11 +74,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void MoveBackround(int moveDirection, float speed)
+    private void MoveBackroundAndClouds(int moveDirection, float speed)
     {
         if (transform.position.x > Camera.main.transform.position.x)
         {
             FindObjectOfType<BackgroundManager>().MoveBackground(moveDirection, speed);
+            FindObjectOfType<CloudsManager>().MoveClouds(moveDirection, speed);
         }
     }
 
