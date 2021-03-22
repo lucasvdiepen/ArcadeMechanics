@@ -91,6 +91,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.transform.tag == "Ground") grounded = true;
 
-        if (collision.transform.tag == "Obstacle") FindObjectOfType<GameManager>().Die();
+        if (collision.transform.tag == "Obstacle")
+        {
+            FindObjectOfType<GameManager>().Die();
+        }
+
     }
 }   

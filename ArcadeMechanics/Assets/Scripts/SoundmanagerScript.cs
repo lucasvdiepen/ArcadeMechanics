@@ -17,6 +17,7 @@ public class SoundmanagerScript : MonoBehaviour
     void Start()
     {
         source = GetComponent<AudioSource>();
+        StartCoroutine(StartBGMMusic());
         StartBGMMusic();
 
     }
@@ -25,9 +26,6 @@ public class SoundmanagerScript : MonoBehaviour
     {
         
     }
-
-
-
 
     public void PlayJumpSounds()
     {
@@ -41,13 +39,15 @@ public class SoundmanagerScript : MonoBehaviour
         source.volume = SoundsVolume;
         source.PlayOneShot(source.clip);
     }
-    public void StartBGMMusic()
+    public IEnumerator StartBGMMusic()
     {
-
-        //source.clip = BGM[Random.Range(0, BGM.Length)];
-        //source.volume = BGMVolume;
-        //source.PlayOneShot(source.clip);
-
-    }
-    
+        while (true)
+        {
+            AudioClip audioClip = BGM[Random.Range(0, BGM.Length)];
+            source.clip = audioClip;
+            source.volume = BGMVolume;
+            source.PlayOneShot(source.clip);
+            yield return new WaitForSeconds(audioClip.length);
+        }
+    }    
 }
