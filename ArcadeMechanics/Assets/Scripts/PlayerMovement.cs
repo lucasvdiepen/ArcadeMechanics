@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 startPosition;
 
     private Rigidbody rb;
-    private bool grounded = false;
+    public bool grounded = false;
 
     void Start()
     {
@@ -92,4 +92,4 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.transform.tag == "Obstacle") FindObjectOfType<GameManager>().Die();
     }
-}
+}   
