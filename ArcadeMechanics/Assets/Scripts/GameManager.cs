@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private int score = 0;
     private int highscore = 0;
     public bool isPaused = false;
+    public int speedIncreaseAt = 50;
+    public float speedIncrease = 0.15f;
 
     void Start()
     {
@@ -27,7 +29,16 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
-        }    
+        }
+
+        if(score % speedIncreaseAt == 0)
+        {
+            float multiplier = 1 + (score / speedIncreaseAt * speedIncrease);
+            Debug.Log("Multiplier: " + multiplier);
+            PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+            playerMovement.speed = playerMovement.startingSpeed * multiplier;
+            Debug.Log(playerMovement.speed);
+        }
     }
 
     private void Pause()

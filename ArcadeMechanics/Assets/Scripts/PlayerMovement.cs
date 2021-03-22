@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float startingSpeed = 5f;
-    private float speed = 5f;
+    [HideInInspector] public float speed = 5f;
     public float jumpForce = 5f;
     public float wallOffset = 1f;
     public bool playerRunAutomatic = false;
