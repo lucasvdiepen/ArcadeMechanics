@@ -16,21 +16,15 @@ public class SoundmanagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartBGMMusic();
+        StartCoroutine(StartBGMMusic());
         source = GetComponent<AudioSource>();
 
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayJumpSounds();
-        }
+        
     }
-
-
-
 
     public void PlayJumpSounds()
     {
@@ -44,11 +38,16 @@ public class SoundmanagerScript : MonoBehaviour
         source.volume = SoundsVolume;
         source.PlayOneShot(source.clip);
     }
-    public void StartBGMMusic()
-    {
-        source.clip = BGM[Random.Range(0, BGM.Length)];
-        source.volume = BGMVolume;
-        source.PlayOneShot(source.clip);
-    }
     
+    public IEnumerator StartBGMMusic()
+    {
+        while (true)
+        {
+            AudioClip audioClip = BGM[Random.Range(0, BGM.Length)];
+            source.clip = audioClip;
+            source.volume = BGMVolume;
+            source.PlayOneShot(source.clip);
+            yield return new WaitForSeconds(audioClip.length);
+        }
+    }    
 }
