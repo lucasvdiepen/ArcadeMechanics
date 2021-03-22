@@ -36,6 +36,7 @@ public class CloudsManager : MonoBehaviour
             float lastCloudX = 0f;
 
             if (activeClouds.Count > 0) lastCloudX = activeClouds[activeClouds.Count - 1].transform.position.x;
+            else lastCloudX = cameraLeftPosition.x;
 
             if(cameraRightPosition.x >= lastCloudX)
             {
