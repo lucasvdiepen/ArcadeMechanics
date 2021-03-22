@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void Die()
     {
+        FindObjectOfType<SoundmanagerScript>().PlayDeathSounds();
         ResetGame();
     }
 

@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 startPosition;
 
     private Rigidbody rb;
-    private bool grounded = false;
+    public bool grounded = false;
 
     void Start()
     {
@@ -71,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             grounded = false;
+            FindObjectOfType<SoundmanagerScript>().PlayJumpSounds();
         }
     }
 
@@ -94,6 +95,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.transform.tag == "Ground") grounded = true;
 
-        if (collision.transform.tag == "Obstacle") FindObjectOfType<GameManager>().Die();
+        if (collision.transform.tag == "Obstacle")
+        {
+            FindObjectOfType<GameManager>().Die();
+        }
+
     }
-}
+}   
