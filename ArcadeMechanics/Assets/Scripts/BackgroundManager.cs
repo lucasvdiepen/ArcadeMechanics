@@ -13,8 +13,11 @@ public class BackgroundManager : MonoBehaviour
 
     private List<GameObject> activeBackgrounds = new List<GameObject>();
 
+    private Vector3 startPosition;
+
     private void Start()
     {
+        startPosition = startingBackground.transform.position;
         activeBackgrounds.Add(startingBackground);
     }
 
@@ -64,5 +67,22 @@ public class BackgroundManager : MonoBehaviour
                 background.transform.Translate(backgroundSpeed * Time.deltaTime, 0, 0, Space.World);
             }
         }
+    }
+
+    public void ResetBackground()
+    {
+        for(int i = 0; i < activeBackgrounds.Count; i++)
+        {
+            Destroy(activeBackgrounds[i]);
+        }
+
+        activeBackgrounds.Clear();
+
+        int rndIndex = Random.Range(0, backgrounds.Length);
+
+        GameObject newBackground = Instantiate(backgrounds[rndIndex]);
+        newBackground.transform.position = startPosition;
+
+        activeBackgrounds.Add(newBackground);
     }
 }

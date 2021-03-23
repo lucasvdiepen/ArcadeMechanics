@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
     public Transform player;
     public Text scoreText;
     public Text highscoreText;
+    public Canvas pauseScreen;
 
-    public int score = 0;
-    public int highscore = 0;
+    private int score = 0;
+    private int highscore = 0;
+    public bool isPaused = false;
 
     void Start()
     {
@@ -21,9 +23,30 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         GetScore();
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }    
     }
 
-    public void GetScore()
+    private void Pause()
+    {
+        if(isPaused)
+        {
+            isPaused = false;
+            pauseScreen.gameObject.SetActive(false);
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            isPaused = true;
+            pauseScreen.gameObject.SetActive(true);
+            Time.timeScale = 0f;
+        }
+    }
+
+    private void GetScore()
     {
         int currentScore = Mathf.RoundToInt(player.transform.position.x);
 
@@ -36,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void Die()
     {
+        FindObjectOfType<SoundmanagerScript>().PlayDeathSounds();
         ResetGame();
     }
 
@@ -57,5 +81,8 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<ObstacleManager>().ResetObstacles();
         FindObjectOfType<PlayerMovement>().ResetPlayer();
         FindObjectOfType<CameraMovement>().ResetCamera();
+        FindObjectOfType<Health>().ResetHealth();
+        FindObjectOfType<BackgroundManager>().ResetBackground();
+        FindObjectOfType<CloudsManager>().ResetClouds();
     }
 }
