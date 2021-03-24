@@ -905,6 +905,7 @@ GameObject:
   - component: {fileID: 918504194}
   - component: {fileID: 918504193}
   - component: {fileID: 918504196}
+  - component: {fileID: 918504197}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -991,6 +992,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1256849778}
   cameraMoveToEnemyTime: 1.5
+--- !u!114 &918504197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918504192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b14e623045de34e833116b7a2a3b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  w_amount: 17
+  h_amount: 7.25
 --- !u!1 &1129357394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,7 +1266,7 @@ MonoBehaviour:
   startingSpeed: 5
   jumpForce: 7
   wallOffset: 1
-  playerRunAutomatic: 1
+  playerRunAutomatic: 0
   freezeMovement: 0
   startPosition: {x: 0, y: -1.58, z: -4.61}
   grounded: 0
