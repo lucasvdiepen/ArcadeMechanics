@@ -1,36 +1,27 @@
 using UnityEngine;
 
+[ExecuteInEditMode]
+[RequireComponent(typeof(Camera))]
 public class CameraScaler : MonoBehaviour
 {
+    // Set this to the in-world distance between the left & right edges of your scene.
+    public float sceneWidth = 10;
 
-    private int current_w = 0;
-    private int current_h = 0;
+    Camera _camera;
 
-    public float w_amount = 33.5f; //Minimum units horizontally
-    public float h_amount = 20f; //Minimum units vertically
-
-    private Camera cam;
-
-    private void Start()
+    void Start()
     {
-        cam = GetComponent<Camera>();
-        SetRes();
+        _camera = GetComponent<Camera>();
     }
 
-    private void SetRes()
-    {
-        current_w = Screen.width;
-        current_h = Screen.height;
-        float width_size = (float)(w_amount * Screen.height / Screen.width * 0.5);
-        float height_size = (float)(h_amount * Screen.width / Screen.height * 0.5) * ((float)Screen.height / Screen.width);
-        cam.orthographicSize = Mathf.Max(height_size, width_size);
-    }
-
+    // Adjust the camera's height so the desired scene width fits in view
+    // even if the screen/window size changes dynamically.
     void Update()
     {
-        if (Screen.width != current_w || Screen.height != current_h)
-        {
-            SetRes();
-        }
+        float unitsPerPixel = sceneWidth / Screen.width;
+
+        float desiredHalfHeight = 0.5f * unitsPerPixel * Screen.height;
+
+        _camera.orthographicSize = desiredHalfHeight;
     }
 }
