@@ -9,11 +9,12 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 5f;
     public float wallOffset = 1f;
     public bool playerRunAutomatic = false;
+    public bool freezeMovement = false;
 
     public Vector3 startPosition;
 
     private Rigidbody2D rb;
-    public bool grounded = false;
+    [HideInInspector] public bool grounded = false;
 
     void Start()
     {
@@ -25,27 +26,27 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(playerRunAutomatic)
+        if(!FindObjectOfType<GameManager>().isPaused && !freezeMovement)
         {
-            transform.Translate(speed * Time.deltaTime, 0, 0, Space.World);
-
-            MoveBackroundAndClouds(1, speed);
-        }
-        else
-        {
-            //Player can be controlled
-
-            int moveDirection = 0;
-
-            Vector3 cameraLeftPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane));
-
-            //Get movement input
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection -= 1;
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) moveDirection += 1;
-
-            if (transform.position.x > cameraLeftPosition.x + wallOffset || moveDirection == 1)
+            if (playerRunAutomatic)
             {
-                if(!FindObjectOfType<GameManager>().isPaused)
+                transform.Translate(speed * Time.deltaTime, 0, 0, Space.World);
+
+                MoveBackroundAndClouds(1, speed);
+            }
+            else
+            {
+                //Player can be controlled
+
+                int moveDirection = 0;
+
+                Vector3 cameraLeftPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane));
+
+                //Get movement input
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection -= 1;
+                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) moveDirection += 1;
+
+                if (transform.position.x > cameraLeftPosition.x + wallOffset || moveDirection == 1)
                 {
                     //Move
                     if (moveDirection == -1)
@@ -61,17 +62,18 @@ public class PlayerMovement : MonoBehaviour
 
                     //Move the background
                     MoveBackroundAndClouds(moveDirection, speed);
+
                 }
             }
-        }
-        
 
-        //Jump
-        if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && grounded)
-        {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            grounded = false;
-            FindObjectOfType<SoundmanagerScript>().PlayJumpSounds();
+
+            //Jump
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && grounded)
+            {
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                grounded = false;
+                FindObjectOfType<SoundmanagerScript>().PlayJumpSounds();
+            }
         }
     }
 
@@ -88,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
     {
         speed = startingSpeed;
         transform.position = startPosition;
+        playerRunAutomatic = true;
         grounded = false;
     }
 

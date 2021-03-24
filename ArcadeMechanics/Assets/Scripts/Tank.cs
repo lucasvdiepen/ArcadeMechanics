@@ -5,36 +5,40 @@ using UnityEngine;
 public class Tank : MonoBehaviour
 {
     public Transform bulletSpawnPoint;
-
     public GameObject bullet;
 
-    public float bulletForce = 2f;
+    public float bulletSpeed = 10f;
 
-    // Start is called before the first frame update
+    private int lookingDirection = -1;
+    private float lastShootTime = 0;
+
+    private Enemy enemy;
+
     void Start()
     {
-        
+        enemy = GetComponent<Enemy>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //For testing
-        if(Input.GetKeyDown(KeyCode.G))
+        Vector3 cameraRightPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+
+        //if(cameraRightPosition.x > transform.position.x)
+        if(enemy.canAttack)
         {
-            Shoot();
+            float time = Time.time;
+            if(time > (lastShootTime + enemy.attackDelay))
+            {
+                lastShootTime = time;
+                Shoot();
+            }    
         }
     }
 
     private void Shoot()
     {
         GameObject newBullet = Instantiate(bullet, bulletSpawnPoint.position, Quaternion.identity);
-
-        Rigidbody2D newBulletRB = newBullet.GetComponent<Rigidbody2D>();
-
-        //newBulletRB.AddForce(transform.forward * bulletForce);
-        newBulletRB.velocity = new Vector2(bulletForce, 0);
-
-        Destroy(newBullet, 5f);
+        Physics2D.IgnoreCollision(newBullet.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        newBullet.GetComponent<Bullet>().StartBullet(lookingDirection, bulletSpeed);
     }
 }
