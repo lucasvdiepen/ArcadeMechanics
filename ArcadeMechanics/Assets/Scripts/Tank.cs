@@ -39,6 +39,6 @@ public class Tank : MonoBehaviour
     {
         GameObject newBullet = Instantiate(bullet, bulletSpawnPoint.position, Quaternion.identity);
         Physics2D.IgnoreCollision(newBullet.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        newBullet.GetComponent<Bullet>().StartBullet(lookingDirection, bulletSpeed);
+        newBullet.GetComponent<Bullet>().StartBullet(lookingDirection, bulletSpeed, Random.Range(enemy.minDamage, enemy.maxDamage + 1));
     }
 }

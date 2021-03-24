@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    public Slider healthBar;
+
     public int startingHealth = 100;
     public int health = 0;
 
@@ -16,6 +19,8 @@ public class Health : MonoBehaviour
     {
         health -= damage;
 
+        healthBar.value = health;
+
         if(health <= 0)
         {
             //Dead
@@ -26,5 +31,6 @@ public class Health : MonoBehaviour
     public void ResetHealth()
     {
         health = startingHealth;
+        healthBar.value = health;
     }
 }

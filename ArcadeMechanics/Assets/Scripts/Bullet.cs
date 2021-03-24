@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
 
     private int moveDiection = 0;
     private float speed = 0;
+    private int damage = 0;
 
     private void Start()
     {
@@ -19,14 +20,20 @@ public class Bullet : MonoBehaviour
         transform.Translate(new Vector3(moveDiection * speed * Time.deltaTime, 0, 0), Space.World);
     }
 
-    public void StartBullet(int _moveDirection, float _speed)
+    public void StartBullet(int _moveDirection, float _speed, int _damage)
     {
         moveDiection = _moveDirection;
         speed = _speed;
+        damage = _damage;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.transform.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Health>().TakeDamage(damage);
+        }
+
         Destroy(gameObject);
     }
 }
