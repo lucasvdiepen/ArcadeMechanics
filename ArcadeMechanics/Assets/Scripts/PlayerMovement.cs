@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public CameraMovement cameraMovement;
+
     public float startingSpeed = 5f;
     private float speed = 5f;
     public float jumpForce = 5f;
@@ -41,12 +43,19 @@ public class PlayerMovement : MonoBehaviour
                 int moveDirection = 0;
 
                 Vector3 cameraLeftPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane));
+                Vector3 cameraRightPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
 
                 //Get movement input
                 if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection -= 1;
                 if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) moveDirection += 1;
 
-                if (transform.position.x > cameraLeftPosition.x + wallOffset || moveDirection == 1)
+                bool canMove = true;
+
+                if (transform.position.x <= cameraLeftPosition.x + wallOffset && moveDirection == -1) canMove = false;
+
+                if (cameraMovement.freezeCameraMovement && transform.position.x >= cameraRightPosition.x - wallOffset && moveDirection == 1) canMove = false;
+
+                if (canMove)
                 {
                     //Move
                     if (moveDirection == -1)
@@ -66,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-
             //Jump
             if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && grounded)
             {
@@ -79,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveBackroundAndClouds(int moveDirection, float speed)
     {
-        if (transform.position.x > Camera.main.transform.position.x)
+        if (transform.position.x > Camera.main.transform.position.x && !FindObjectOfType<CameraMovement>().freezeCameraMovement)
         {
             FindObjectOfType<BackgroundManager>().MoveBackground(moveDirection, speed);
             FindObjectOfType<CloudsManager>().MoveClouds(moveDirection, speed);

@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
     public int startingHealth = 100;
     public int health = 0;
 
-    public bool isEnemy = false;
+    public bool isBoss = false;
 
     private void Start()
     {
@@ -26,13 +26,14 @@ public class Health : MonoBehaviour
         if(health <= 0)
         {
             //Dead
-            if(!isEnemy)
+            if(!isBoss)
             {
                 FindObjectOfType<GameManager>().Die();
             }
             else
             {
                 //Remove enemy
+                FindObjectOfType<ObstacleManager>().BossKilled(transform.position);
                 Destroy(gameObject);
             }
         }
@@ -40,7 +41,7 @@ public class Health : MonoBehaviour
 
     public void ResetHealth()
     {
-        if(!isEnemy)
+        if(!isBoss)
         {
             health = startingHealth;
             healthBar.value = health;

@@ -1263,6 +1263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70a52d19af71c949a0b374b2c4a1dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraMovement: {fileID: 918504196}
   startingSpeed: 5
   jumpForce: 7
   wallOffset: 1
@@ -1347,7 +1348,7 @@ MonoBehaviour:
   healthBar: {fileID: 1159321719}
   startingHealth: 100
   health: 0
-  isEnemy: 0
+  isBoss: 0
 --- !u!1 &1397154954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1593,14 +1594,19 @@ MonoBehaviour:
   - {fileID: 8684187423963032166, guid: 5c92cb8855a15dc4fb7611f2b7b1d45e, type: 3}
   - {fileID: 2914700399611878717, guid: de665bc342be09d42937e6631934c8d2, type: 3}
   - {fileID: 3742012397494656542, guid: 765d8320d5e6d30428b7726e883bc0e5, type: 3}
-  bosses:
-  - {fileID: 8195184014268062279, guid: b6a06f75d91d3b040b0c068ff3f7819c, type: 3}
   minObstacleDistance: 11
   maxObstacleDistance: 16
-  bossAfterObstacles: 2
   spawnObstacleOffset: 1
+  obstacleBosses:
+  - {fileID: 8481317505086264708, guid: 110bc53900ac95d41b42405bf492cbeb, type: 3}
+  - {fileID: 737232364073932342, guid: 5d0f34594f1d0024eaaa5c09a17bda76, type: 3}
+  bosses:
+  - {fileID: 8195184014268062279, guid: b6a06f75d91d3b040b0c068ff3f7819c, type: 3}
+  bossAfterObstacles: 2
   bossSmoothCameraStartAtDistance: 5.3
   bossCameraRightOffset: 2
+  bossKilledResumeOffset: 2
+  obstacleBossChance: 50
 --- !u!1 &1914491372
 GameObject:
   m_ObjectHideFlags: 0

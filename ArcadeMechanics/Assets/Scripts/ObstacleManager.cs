@@ -4,42 +4,61 @@ using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
 {
-    public GameObject[] obstacles;
+    [Header("Obstacles")]
 
-    public GameObject[] bosses;
+    public GameObject[] obstacles;
 
     public float minObstacleDistance = 6f;
     public float maxObstacleDistance = 15f;
-
-    public int bossAfterObstacles = 50;
 
     private float lastObstacleX = 0f;
 
     public float spawnObstacleOffset = 1f;
 
+    [Header("Bosses")]
+
+    public GameObject[] obstacleBosses;
+    public GameObject[] bosses;
+
+    public int bossAfterObstacles = 50;
     public float bossSmoothCameraStartAtDistance = 5f;
     public float bossCameraRightOffset = 1f;
-
-    private bool shouldSpawn = true;
+    public float bossKilledResumeOffset = 2f;
 
     private bool bossActive = false;
+    private BossType bossType;
+    private Vector3 bossLastPosition = Vector3.zero;
+    private bool bossKilled = false;
 
     private List<GameObject> activeObstacles = new List<GameObject>();
+
+    private bool shouldSpawn = true;
 
     private int spawnedObstacles = 0;
 
     private bool smoothCamera = false;
+
+    [Range(0, 100)]
+    public int obstacleBossChance = 50;
+
+    private enum BossType
+    {
+        ObstacleBoss,
+        Boss
+    }
 
     void Update()
     {
         Vector3 cameraRightPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
         Vector3 cameraLeftPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane));
 
+        //check if obstacles should be spawned
         if (cameraRightPosition.x >= lastObstacleX - spawnObstacleOffset)
         {
             SpawnObstacle();
         }
 
+        //Check if boss should be spawned
         if(spawnedObstacles % bossAfterObstacles == 0 && !bossActive)
         {
             SpawnBoss();
@@ -49,44 +68,87 @@ public class ObstacleManager : MonoBehaviour
         {
             GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
 
+            //Check when the camera should start to move smoothly to the enemy
             if (cameraRightPosition.x >= lastObstacle.transform.position.x - bossSmoothCameraStartAtDistance && !smoothCamera)
             {
                 smoothCamera = true;
                 FindObjectOfType<CameraMovement>().MoveSmoothToEnemy(lastObstacle.transform.position.x + bossCameraRightOffset);
             }
 
-            if(cameraLeftPosition.x >= lastObstacle.transform.position.x)
+            //Check if player passed the obstacle boss
+            if(cameraLeftPosition.x >= lastObstacle.transform.position.x && bossType == BossType.ObstacleBoss)
             {
-                bossActive = false;
-                smoothCamera = false;
-                StartObstacleSpawn();
-                FindObjectOfType<PlayerMovement>().playerRunAutomatic = true;
+                BossDone();
             }
+
+            //Check if player passed the boss
+            if (cameraLeftPosition.x >= bossLastPosition.x + bossKilledResumeOffset && bossKilled && bossType == BossType.Boss)
+            {
+                BossDone();
+            }
+        }
+    }
+
+    public void BossDone()
+    {
+        bossActive = false;
+        smoothCamera = false;
+        bossKilled = false;
+        StartObstacleSpawn();
+        FindObjectOfType<PlayerMovement>().playerRunAutomatic = true;
+    }
+
+    public void BossKilled(Vector3 lastPosition)
+    {
+        if (bossType == BossType.Boss)
+        {
+            FindObjectOfType<CameraMovement>().freezeCameraMovement = false;
+            bossLastPosition = lastPosition;
+            bossKilled = true;
         }
     }
 
     public void SmoothCameraAnimationDone()
     {
+        if(bossType == BossType.Boss) FindObjectOfType<CameraMovement>().freezeCameraMovement = true;
+
         GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
+        lastObstacle.GetComponent<Enemy>().canAttack = true;
         FindObjectOfType<PlayerMovement>().freezeMovement = false;
         FindObjectOfType<PlayerMovement>().playerRunAutomatic = false;
-        lastObstacle.GetComponent<Enemy>().canAttack = true;
     }
 
     private void SpawnBoss()
     {
         StopObstacleSpawn();
 
-        int rndIndex = Random.Range(0, bosses.Length);
+        //Choose between obstacleBoss and normal boss
+        GameObject bossToSpawn;
 
+        if(Random.Range(0, 101) < obstacleBossChance)
+        {
+            int rndIndex = Random.Range(0, obstacleBosses.Length);
+            bossToSpawn = obstacleBosses[rndIndex];
+            bossType = BossType.ObstacleBoss;
+        }
+        else
+        {
+            int rndIndex = Random.Range(0, bosses.Length);
+            bossToSpawn = bosses[rndIndex];
+            bossType = BossType.Boss;
+        }
+
+        //Create new terrain for boss
         Vector3 bossSpawnPosition = FindObjectOfType<TerrainManager>().PrepareForBoss();
 
-        GameObject newBoss = Instantiate(bosses[rndIndex]);
+        //Spawn new boss
+        GameObject newBoss = Instantiate(bossToSpawn);
         newBoss.transform.position = new Vector3(bossSpawnPosition.x, newBoss.transform.position.y, newBoss.transform.position.z);
 
         activeObstacles.Add(newBoss);
 
         bossActive = true;
+        bossKilled = false;
     }    
 
     public void RemoveObstaclesBetween(float startX, float endX)
