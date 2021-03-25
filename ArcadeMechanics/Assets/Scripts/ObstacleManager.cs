@@ -30,11 +30,6 @@ public class ObstacleManager : MonoBehaviour
 
     private bool smoothCamera = false;
 
-    void Start()
-    {
-        //SpawnObstacle();
-    }
-
     void Update()
     {
         Vector3 cameraRightPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));

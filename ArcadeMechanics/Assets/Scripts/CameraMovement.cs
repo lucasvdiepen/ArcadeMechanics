@@ -14,7 +14,9 @@ public class CameraMovement : MonoBehaviour
     private float startPositionX;
     private float endPositionX;
 
-    float distanceToEgde = 0;
+    private float distanceToEgde = 0;
+
+    [HideInInspector] public bool freezeCameraMovement = false;
 
     void Start()
     {
@@ -43,9 +45,12 @@ public class CameraMovement : MonoBehaviour
 
     void LateUpdate()
     {
-        if(target.position.x > transform.position.x)
+        if(!freezeCameraMovement)
         {
-            SetCameraToTarget();
+            if(target.position.x > transform.position.x)
+            {
+                SetCameraToTarget();
+            }
         }
     }
 
@@ -56,6 +61,9 @@ public class CameraMovement : MonoBehaviour
 
     public void ResetCamera()
     {
+        freezeCameraMovement = false;
+        moveToEnemy = false;
+        timeElapsed = 0;
         SetCameraToTarget();
     }
 

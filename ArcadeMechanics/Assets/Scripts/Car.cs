@@ -2,19 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tank : MonoBehaviour
+public class Car : MonoBehaviour
 {
-    public Transform bulletSpawnPoint;
-    public GameObject bullet;
-
-    public float bulletSpeed = 10f;
-    public float bulletSize = 2.6f;
+    private Animator animator;
 
     private Enemy enemy;
 
+    // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -25,6 +23,6 @@ public class Tank : MonoBehaviour
     private void Attack()
     {
         //Process how the enemy should attack
-        enemy.ShootBullet(bullet, bulletSpawnPoint, bulletSpeed, bulletSize);
+        
     }
 }
