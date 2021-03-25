@@ -30,6 +30,12 @@ public class Enemy : MonoBehaviour
         return false;
     }
 
+    public void Move(int moveDirection, float speed)
+    {
+        lookingDirection = moveDirection;
+        transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
+    }
+
     public void ShootBullet(GameObject bullet, Transform bulletSpawnPoint, float bulletSpeed, float size)
     {
         GameObject newBullet = Instantiate(bullet, bulletSpawnPoint.position, Quaternion.identity);

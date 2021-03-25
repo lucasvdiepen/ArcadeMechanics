@@ -10,6 +10,8 @@ public class Health : MonoBehaviour
     public int startingHealth = 100;
     public int health = 0;
 
+    public bool isEnemy = false;
+
     private void Start()
     {
         health = startingHealth;
@@ -24,13 +26,24 @@ public class Health : MonoBehaviour
         if(health <= 0)
         {
             //Dead
-            FindObjectOfType<GameManager>().Die();
+            if(!isEnemy)
+            {
+                FindObjectOfType<GameManager>().Die();
+            }
+            else
+            {
+                //Remove enemy
+                Destroy(gameObject);
+            }
         }
     }
 
     public void ResetHealth()
     {
-        health = startingHealth;
-        healthBar.value = health;
+        if(!isEnemy)
+        {
+            health = startingHealth;
+            healthBar.value = health;
+        }
     }
 }
