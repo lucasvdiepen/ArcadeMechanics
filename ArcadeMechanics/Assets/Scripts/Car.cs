@@ -5,7 +5,9 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     public Animator animator;
-    public Canvas healthBarCanvas;
+    public GameObject healthBar;
+
+    private RectTransform healthBarTransform;
 
     public float speed = 5f;
 
@@ -23,12 +25,12 @@ public class Car : MonoBehaviour
     private bool move = false;
     private int moveDirection = 0;
 
-
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
         health = GetComponent<Health>();
+        healthBarTransform = healthBar.GetComponent<RectTransform>();
     }
 
     void Update()
@@ -69,15 +71,15 @@ public class Car : MonoBehaviour
         if (transform.position.x < target.x) 
         {
             transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-            healthBarCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-            moveDirection = 1; 
+            healthBarTransform.localRotation = Quaternion.Euler(180, 0, 0);
+            moveDirection = 1;
         }
 
         if (transform.position.x > target.x) 
-        { 
+        {
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-            healthBarCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-            moveDirection = -1; 
+            healthBarTransform.localRotation = Quaternion.Euler(180, 180, 0);
+            moveDirection = -1;
         }
     }
 

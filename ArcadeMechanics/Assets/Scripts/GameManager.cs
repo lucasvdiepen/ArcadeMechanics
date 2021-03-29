@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Transform player;
+    public Health playerHealth;
     public Text scoreText;
     public Text highscoreText;
     public Canvas pauseScreen;
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<ObstacleManager>().ResetObstacles();
         FindObjectOfType<PlayerMovement>().ResetPlayer();
         FindObjectOfType<CameraMovement>().ResetCamera();
-        FindObjectOfType<Health>().ResetHealth();
+        playerHealth.ResetHealth();
         FindObjectOfType<BackgroundManager>().ResetBackground();
         FindObjectOfType<CloudsManager>().ResetClouds();
     }
