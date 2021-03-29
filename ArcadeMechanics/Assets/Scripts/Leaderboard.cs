@@ -68,49 +68,49 @@ public class Leaderboard : MonoBehaviour
             Debug.Log("Score 1 update");
 
         }
-        if (highscore <= score1 & highscore >= score2)
+        else if (highscore <= score1 & highscore >= score2)
         {
             score2 = highscore;
             leaderboardScores[1].text = score2.ToString();
             Debug.Log("Score 2 update");
         }
-        if (highscore <= score2 & highscore >= score3)
+        else if (highscore <= score2 & highscore >= score3)
         {
             score3 = highscore;
             leaderboardScores[2].text = score3.ToString();
             Debug.Log("Score 3 update");
         }
-        if (highscore <= score3 & highscore >= score4)
+        else if (highscore <= score3 & highscore >= score4)
         {
             score4 = highscore;
             leaderboardScores[3].text = score4.ToString();
             Debug.Log("Score 4 update");
         }
-        if (highscore <= score4 & highscore >= score5)
+        else if (highscore <= score4 & highscore >= score5)
         {
             score5 = highscore;
             leaderboardScores[4].text = score5.ToString();
             Debug.Log("Score 5 update");
         }
-        if (highscore <= score5 & highscore >= score6)
+        else if (highscore <= score5 & highscore >= score6)
         {
             score6 = highscore;
             leaderboardScores[5].text = score6.ToString();
             Debug.Log("Score 6 update");
         }
-        if (highscore <= score6 & highscore >= score7)
+        else if (highscore <= score6 & highscore >= score7)
         {
             score7 = highscore;
             leaderboardScores[6].text = score7.ToString();
             Debug.Log("Score 7 update");
         }
-        if (highscore <= score7 & highscore >= score8)
+        else if (highscore <= score7 & highscore >= score8)
         {
             score8 = highscore;
             leaderboardScores[7].text = score8.ToString();
             Debug.Log("Score 8 update");
         }
-        if (highscore <= score8 & highscore >= score9)
+        else if (highscore <= score8 & highscore >= score9)
         {
             score9 = highscore;
             leaderboardScores[8].text = score9.ToString();
