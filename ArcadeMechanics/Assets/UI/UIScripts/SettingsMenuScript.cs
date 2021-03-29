@@ -13,10 +13,12 @@ public class SettingsMenuScript : MonoBehaviour
     public void BGMChanged(float value)
     {
         Debug.Log("BGM Volume set to " + value);
+        FindObjectOfType<SoundmanagerScript>().ChangeBGMVolume(value);
     }
     public void SFXChanged(float value)
     {
         Debug.Log("SFX Volume set to " + value);
+        FindObjectOfType<SoundmanagerScript>().ChangeSFXVolume(value);
     }
     public void OnBGMSliderChanged()
     {

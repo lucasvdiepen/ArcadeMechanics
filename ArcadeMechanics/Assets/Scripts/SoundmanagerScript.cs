@@ -9,17 +9,28 @@ public class SoundmanagerScript : MonoBehaviour
     public AudioClip[] DeathSounds;
     public AudioClip[] BGM;
     private AudioSource source;
-    float BGMVolume = 0.3f;
+    public GameObject GetVolume;
+    float BGMVolume = 0.5f;
     float SFXVolume = 0.5f;
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
+
         source = GetComponent<AudioSource>();
         StartCoroutine(StartBGMMusic());
         StartBGMMusic();
 
+    }
+    public void ChangeSFXVolume(float value)
+    {
+        BGMVolume = value;
+    }
+    public void ChangeBGMVolume(float value)
+    {
+        SFXVolume = value;
     }
 
     public void PlayJumpSounds()
