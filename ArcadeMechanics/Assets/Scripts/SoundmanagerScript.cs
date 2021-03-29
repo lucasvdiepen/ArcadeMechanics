@@ -12,8 +12,21 @@ public class SoundmanagerScript : MonoBehaviour
     public GameObject GetVolume;
     float BGMVolume = 0.5f;
     float SFXVolume = 0.5f;
-    
 
+    private static SoundmanagerScript soundManager;
+
+    private void Awake()
+    {
+        if(!soundManager)
+        {
+            DontDestroyOnLoad(gameObject);
+            soundManager = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
