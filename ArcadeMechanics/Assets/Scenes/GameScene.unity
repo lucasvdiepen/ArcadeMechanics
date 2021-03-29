@@ -1429,7 +1429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1256849778}
-  playerHealth: {fileID: 0}
+  playerHealth: {fileID: 1256849780}
   scoreText: {fileID: 479394039}
   highscoreText: {fileID: 1208819960}
   pauseScreen: {fileID: 427982364}
