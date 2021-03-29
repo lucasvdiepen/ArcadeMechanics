@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
 {
+    public Transform mainCamera;
+    public Transform player;
+
     [Header("Obstacles")]
 
     public GameObject[] obstacles;
@@ -41,6 +44,7 @@ public class ObstacleManager : MonoBehaviour
     [Range(0, 100)]
     public int obstacleBossChance = 50;
 
+
     private enum BossType
     {
         ObstacleBoss,
@@ -68,24 +72,27 @@ public class ObstacleManager : MonoBehaviour
         {
             GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
 
-            //Check when the camera should start to move smoothly to the enemy
-            if (cameraRightPosition.x >= lastObstacle.transform.position.x - bossSmoothCameraStartAtDistance && !smoothCamera)
+            if (lastObstacle.transform.tag == "Enemy")
             {
-                smoothCamera = true;
-                FindObjectOfType<CameraMovement>().MoveSmoothToEnemy(lastObstacle.transform.position.x + bossCameraRightOffset);
-            }
+                //Check when the camera should start to move smoothly to the enemy
+                if (cameraRightPosition.x >= lastObstacle.transform.position.x - bossSmoothCameraStartAtDistance && !smoothCamera)
+                {
+                    smoothCamera = true;
+                    FindObjectOfType<CameraMovement>().MoveSmoothToEnemy(lastObstacle.transform.position.x + bossCameraRightOffset);
+                }
 
-            //Check if player passed the obstacle boss
-            if(cameraLeftPosition.x >= lastObstacle.transform.position.x && bossType == BossType.ObstacleBoss)
-            {
-                BossDone();
+                //Check if player passed the obstacle boss
+                if (cameraLeftPosition.x >= lastObstacle.transform.position.x && bossType == BossType.ObstacleBoss)
+                {
+                    BossDone();
+                }
             }
+        }
 
-            //Check if player passed the boss
-            if (cameraLeftPosition.x >= bossLastPosition.x + bossKilledResumeOffset && bossKilled && bossType == BossType.Boss)
-            {
-                BossDone();
-            }
+        //Check if player passed the boss last position
+        if (cameraLeftPosition.x >= bossLastPosition.x + bossKilledResumeOffset && bossKilled && bossType == BossType.Boss)
+        {
+            BossDone();
         }
     }
 
@@ -102,13 +109,23 @@ public class ObstacleManager : MonoBehaviour
     {
         if (bossType == BossType.Boss)
         {
-            FindObjectOfType<CameraMovement>().freezeCameraMovement = false;
+            if (activeObstacles.Count > 0) activeObstacles.RemoveAt(activeObstacles.Count - 1);
+
             bossLastPosition = lastPosition;
-            bossKilled = true;
+
+            //if player past the camera center the camera should smoothly move to the player
+            if (player.position.x > mainCamera.position.x) FindObjectOfType<CameraMovement>().MoveSmoothToPlayer();
+            else SmoothCameraAnimationToPlayerDone();
         }
     }
 
-    public void SmoothCameraAnimationDone()
+    public void SmoothCameraAnimationToPlayerDone()
+    {
+        FindObjectOfType<CameraMovement>().freezeCameraMovement = false;
+        bossKilled = true;
+    }
+
+    public void SmoothCameraAnimationToEnemyDone()
     {
         if(bossType == BossType.Boss) FindObjectOfType<CameraMovement>().freezeCameraMovement = true;
 

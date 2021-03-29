@@ -11,7 +11,13 @@ public class Car : MonoBehaviour
 
     public float edgeOffset = 1f;
 
+    public float takeDamageHeight = -2.16f;
+
+    public int minGetDamage = 15;
+    public int maxGetDamage = 25;
+
     private Enemy enemy;
+    private Health health;
 
     private bool isPreparing = false;
     private bool move = false;
@@ -22,6 +28,7 @@ public class Car : MonoBehaviour
     void Start()
     {
         enemy = GetComponent<Enemy>();
+        health = GetComponent<Health>();
     }
 
     void Update()
@@ -81,9 +88,13 @@ public class Car : MonoBehaviour
             if(move)
             {
                 move = false;
-                int rndDamage = Random.Range(enemy.minDamage, enemy.maxDamage);
+                int rndDamage = Random.Range(enemy.minDamage, enemy.maxDamage + 1);
                 collision.gameObject.GetComponent<Health>().TakeDamage(rndDamage);
-                GetComponent<Health>().TakeDamage(25);
+            }
+            else
+            {
+                int rndDamage = Random.Range(minGetDamage, maxGetDamage + 1);
+                if (collision.transform.position.y >= takeDamageHeight) health.TakeDamage(rndDamage);
             }
         }
     }

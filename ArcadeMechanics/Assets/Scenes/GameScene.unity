@@ -992,6 +992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1256849778}
   cameraMoveToEnemyTime: 1.5
+  camereMoveToPlayerTime: 0.5
   freezeCameraMovement: 0
 --- !u!114 &918504197
 MonoBehaviour:
@@ -1306,7 +1307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256849775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.58, z: -4.61}
+  m_LocalPosition: {x: 5.85, y: -2.16, z: -4.61}
   m_LocalScale: {x: 2.0114074, y: 2.0114074, z: 2.0114074}
   m_Children:
   - {fileID: 1914491373}
@@ -1591,6 +1592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0b063d18392db44923c36a5695bd77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 918504195}
+  player: {fileID: 1256849778}
   obstacles:
   - {fileID: 8684187423963032166, guid: 5c92cb8855a15dc4fb7611f2b7b1d45e, type: 3}
   - {fileID: 2914700399611878717, guid: de665bc342be09d42937e6631934c8d2, type: 3}

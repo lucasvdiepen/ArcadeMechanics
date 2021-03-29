@@ -7,9 +7,11 @@ public class CameraMovement : MonoBehaviour
     public Transform target;
 
     public float cameraMoveToEnemyTime = 1f;
+    public float camereMoveToPlayerTime = 0.5f;
 
     private float timeElapsed = 0;
-    private bool moveToEnemy = false;
+    private bool moveSmooth = false;
+    private float moveTime = 0;
 
     private float startPositionX;
     private float endPositionX;
@@ -18,25 +20,42 @@ public class CameraMovement : MonoBehaviour
 
     [HideInInspector] public bool freezeCameraMovement = false;
 
+    private GameObject player;
+
+    private enum MovingTo
+    {
+        Enemy,
+        Player
+    }
+
+    private MovingTo movingTo;
+
     void Start()
     {
         Vector3 cameraRightPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
 
         distanceToEgde = cameraRightPosition.x - transform.position.x;
-
-        SetCameraToTarget();
     }
 
     private void Update()
     {
-        if(moveToEnemy)
+        if(moveSmooth)
         {
-            transform.position = new Vector3(Mathf.Lerp(startPositionX, endPositionX, timeElapsed / cameraMoveToEnemyTime) - distanceToEgde, transform.position.y, transform.position.z);
-            if(timeElapsed >= cameraMoveToEnemyTime)
+            if (movingTo == MovingTo.Enemy) transform.position = new Vector3(Mathf.Lerp(startPositionX, endPositionX, timeElapsed / moveTime) - distanceToEgde, transform.position.y, transform.position.z);
+            else if (movingTo == MovingTo.Player) transform.position = new Vector3(Mathf.Lerp(startPositionX, endPositionX, timeElapsed / moveTime), transform.position.y, transform.position.z);
+            if (timeElapsed >= moveTime)
             {
                 //Smooth camera move done
-                moveToEnemy = false;
-                FindObjectOfType<ObstacleManager>().SmoothCameraAnimationDone();
+                if(movingTo == MovingTo.Enemy)
+                {
+                    moveSmooth = false;
+                    FindObjectOfType<ObstacleManager>().SmoothCameraAnimationToEnemyDone();
+                }
+                else if(movingTo == MovingTo.Player)
+                {
+                    moveSmooth = false;
+                    FindObjectOfType<ObstacleManager>().SmoothCameraAnimationToPlayerDone();
+                }
             }
 
             timeElapsed += Time.deltaTime;
@@ -62,17 +81,30 @@ public class CameraMovement : MonoBehaviour
     public void ResetCamera()
     {
         freezeCameraMovement = false;
-        moveToEnemy = false;
+        moveSmooth = false;
         timeElapsed = 0;
+        moveTime = 0;
         SetCameraToTarget();
     }
 
-    public void MoveSmoothToEnemy(float target)
+    public void MoveSmoothToEnemy(float targetX)
     {
         FindObjectOfType<PlayerMovement>().freezeMovement = true;
         startPositionX = transform.position.x + distanceToEgde;
-        endPositionX = target;
+        endPositionX = targetX;
         timeElapsed = 0;
-        moveToEnemy = true;
+        moveTime = cameraMoveToEnemyTime;
+        movingTo = MovingTo.Enemy;
+        moveSmooth = true;
+    }
+
+    public void MoveSmoothToPlayer()
+    {
+        timeElapsed = 0;
+        startPositionX = transform.position.x;
+        endPositionX = target.position.x;
+        moveTime = camereMoveToPlayerTime;
+        movingTo = MovingTo.Player;
+        moveSmooth = true;
     }
 }
