@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundmanagerScript : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class SoundmanagerScript : MonoBehaviour
     private AudioSource source;
     float BGMVolume = 0.3f;
     float SFXVolume = 0.5f;
-
 
 
     // Start is called before the first frame update
