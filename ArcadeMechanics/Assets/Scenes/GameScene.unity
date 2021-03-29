@@ -1602,7 +1602,7 @@ MonoBehaviour:
   - {fileID: 8481317505086264708, guid: 110bc53900ac95d41b42405bf492cbeb, type: 3}
   - {fileID: 737232364073932342, guid: 5d0f34594f1d0024eaaa5c09a17bda76, type: 3}
   bosses:
-  - {fileID: 8195184014268062279, guid: b6a06f75d91d3b040b0c068ff3f7819c, type: 3}
+  - {fileID: 3560934112410868779, guid: b6a06f75d91d3b040b0c068ff3f7819c, type: 3}
   bossAfterObstacles: 2
   bossSmoothCameraStartAtDistance: 5.3
   bossCameraRightOffset: 2

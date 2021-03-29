@@ -5,6 +5,7 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     public Animator animator;
+    public Canvas healthBarCanvas;
 
     public float speed = 5f;
 
@@ -58,8 +59,19 @@ public class Car : MonoBehaviour
 
         Vector3 target = FindObjectOfType<PlayerMovement>().transform.position;
 
-        if (transform.position.x < target.x) { transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0)); moveDirection = 1; }
-        if (transform.position.x > target.x) { transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0)); moveDirection = -1; }
+        if (transform.position.x < target.x) 
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            healthBarCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            moveDirection = 1; 
+        }
+
+        if (transform.position.x > target.x) 
+        { 
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            healthBarCanvas.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            moveDirection = -1; 
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -71,6 +83,7 @@ public class Car : MonoBehaviour
                 move = false;
                 int rndDamage = Random.Range(enemy.minDamage, enemy.maxDamage);
                 collision.gameObject.GetComponent<Health>().TakeDamage(rndDamage);
+                GetComponent<Health>().TakeDamage(25);
             }
         }
     }
