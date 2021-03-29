@@ -1264,6 +1264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraMovement: {fileID: 918504196}
+  gameManager: {fileID: 1442038089}
   startingSpeed: 5
   jumpForce: 7
   wallOffset: 1

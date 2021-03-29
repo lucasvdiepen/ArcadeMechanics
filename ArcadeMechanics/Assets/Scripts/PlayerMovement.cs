@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public CameraMovement cameraMovement;
+    public GameManager gameManager;
 
     public float startingSpeed = 5f;
     private float speed = 5f;
@@ -28,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(!FindObjectOfType<GameManager>().isPaused && !freezeMovement)
+        if(!gameManager.isPaused && !freezeMovement)
         {
             if (playerRunAutomatic)
             {
@@ -109,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.transform.tag == "Obstacle")
         {
-            FindObjectOfType<GameManager>().Die();
+            gameManager.Die();
         }
 
     }
