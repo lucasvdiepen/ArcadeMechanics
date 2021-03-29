@@ -180,8 +180,6 @@ MonoBehaviour:
   BGM:
   - {fileID: 8300000, guid: 1973bd184fe6c824c9eddafa94a751e3, type: 3}
   - {fileID: 8300000, guid: 4ae269f3003712143bd41a13bf4ccc9d, type: 3}
-  SoundsVolume: 0.5
-  BGMVolume: 0.3
 --- !u!82 &5462856
 AudioSource:
   m_ObjectHideFlags: 0
@@ -668,7 +666,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Paused
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 65017a1ec8c850a42b861a7dcd49a68a, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -732,7 +730,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -1.4050927, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &619133792
