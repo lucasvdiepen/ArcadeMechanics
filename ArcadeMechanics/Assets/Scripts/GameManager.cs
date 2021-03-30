@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public PlayerMovement playerMovement;
+
     public Transform player;
     public Text scoreText;
     public Text highscoreText;
@@ -16,10 +18,14 @@ public class GameManager : MonoBehaviour
     public int speedIncreaseAt = 50;
     public float speedIncrease = 0.15f;
 
+    private float currentSpeed = 0;
+
     void Start()
     {
         highscore = PlayerPrefs.GetInt("Highscore", 0);
         highscoreText.text = "Highscore: " + highscore;
+
+        currentSpeed = playerMovement.startingSpeed;
     }
 
     void Update()
@@ -31,14 +37,22 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
-        if(score % speedIncreaseAt == 0)
+        float newSpeed = (score / speedIncreaseAt * speedIncrease) + playerMovement.startingSpeed;
+        if(currentSpeed != newSpeed)
+        {
+            currentSpeed = newSpeed;
+            playerMovement.speed = currentSpeed;
+            Debug.Log("New speed: " + currentSpeed);
+        }
+
+        /*if(score % speedIncreaseAt == 0)
         {
             float multiplier = 1 + (score / speedIncreaseAt * speedIncrease);
             Debug.Log("Multiplier: " + multiplier);
             PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
             playerMovement.speed = playerMovement.startingSpeed * multiplier;
             Debug.Log(playerMovement.speed);
-        }
+        }*/
     }
 
     private void Pause()

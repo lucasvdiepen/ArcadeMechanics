@@ -1008,6 +1008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingSpeed: 5
+  speed: 5
   jumpForce: 7
   wallOffset: 1
   playerRunAutomatic: 0
@@ -1149,11 +1150,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51c0aa66ad00b04db4d2f4d44e3efff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 1256849776}
   player: {fileID: 1256849778}
   scoreText: {fileID: 479394039}
   highscoreText: {fileID: 1208819960}
   pauseScreen: {fileID: 427982364}
   isPaused: 0
+  speedIncreaseAt: 25
+  speedIncrease: 0.25
 --- !u!4 &1442038090
 Transform:
   m_ObjectHideFlags: 0
