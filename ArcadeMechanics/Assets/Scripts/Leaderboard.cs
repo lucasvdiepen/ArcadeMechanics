@@ -18,6 +18,11 @@ public class Leaderboard : MonoBehaviour
         public string playername;
     }
     */
+    public void updateLeaderboard(int lastscore, string inputname)
+    {
+
+    }
+
 
     // Start is called before the first frame update
     void Start()
