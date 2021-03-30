@@ -111,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void StopBoss()
     {
+        timeElapsed = 0;
         speedingUp = true;
     }
 
