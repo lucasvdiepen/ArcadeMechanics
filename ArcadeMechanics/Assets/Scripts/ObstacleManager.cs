@@ -11,8 +11,11 @@ public class ObstacleManager : MonoBehaviour
 
     public GameObject[] obstacles;
 
-    public float minObstacleDistance = 6f;
-    public float maxObstacleDistance = 15f;
+    public float startingMinObstacleDistance = 6f;
+    public float startingMaxObstacleDistance = 15f;
+
+    [HideInInspector] public float minObstacleDistance = 6f;
+    [HideInInspector] public float maxObstacleDistance = 15f;
 
     private float lastObstacleX = 0f;
 
@@ -49,6 +52,12 @@ public class ObstacleManager : MonoBehaviour
     {
         ObstacleBoss,
         Boss
+    }
+
+    private void Start()
+    {
+        minObstacleDistance = startingMinObstacleDistance;
+        maxObstacleDistance = startingMaxObstacleDistance;
     }
 
     void Update()

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public PlayerMovement playerMovement;
+    public ObstacleManager obstacleManager;
 
     public Transform player;
     public Health playerHealth;
@@ -25,8 +26,6 @@ public class GameManager : MonoBehaviour
     {
         highscore = PlayerPrefs.GetInt("Highscore", 0);
         highscoreText.text = "Highscore: " + highscore;
-
-        currentSpeed = playerMovement.startingSpeed;
     }
 
     void Update()
@@ -38,11 +37,15 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
-        float newSpeed = (score / speedIncreaseAt * speedIncrease) + playerMovement.startingSpeed;
+        float newSpeed = score / speedIncreaseAt * speedIncrease;
         if(currentSpeed != newSpeed)
         {
             currentSpeed = newSpeed;
-            playerMovement.speed = currentSpeed;
+            playerMovement.speed = currentSpeed + playerMovement.startingSpeed;
+
+            obstacleManager.minObstacleDistance = currentSpeed + obstacleManager.startingMinObstacleDistance;
+            obstacleManager.maxObstacleDistance = currentSpeed + obstacleManager.startingMaxObstacleDistance;
+
             Debug.Log("New speed: " + currentSpeed);
         }
 

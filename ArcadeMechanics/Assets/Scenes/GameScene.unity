@@ -1430,6 +1430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 1256849776}
+  obstacleManager: {fileID: 1672970925}
   player: {fileID: 1256849778}
   playerHealth: {fileID: 1256849780}
   scoreText: {fileID: 479394039}
@@ -1603,6 +1604,8 @@ MonoBehaviour:
   - {fileID: 8684187423963032166, guid: 5c92cb8855a15dc4fb7611f2b7b1d45e, type: 3}
   - {fileID: 2914700399611878717, guid: de665bc342be09d42937e6631934c8d2, type: 3}
   - {fileID: 3742012397494656542, guid: 765d8320d5e6d30428b7726e883bc0e5, type: 3}
+  startingMinObstacleDistance: 11
+  startingMaxObstacleDistance: 16
   minObstacleDistance: 11
   maxObstacleDistance: 16
   spawnObstacleOffset: 1
