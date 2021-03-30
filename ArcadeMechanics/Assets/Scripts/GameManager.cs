@@ -26,7 +26,10 @@ public class GameManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Pause();
+            if(!FindObjectOfType<SettingsMenuScript>().settingsIsOpen)
+            {
+                Pause();
+            }
         }    
     }
 

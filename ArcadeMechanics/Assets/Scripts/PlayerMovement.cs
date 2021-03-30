@@ -12,12 +12,12 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 startPosition;
 
-    private Rigidbody rb;
+    private Rigidbody2D rb;
     public bool grounded = false;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
 
         speed = startingSpeed;
         transform.position = startPosition;
@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
         //Jump
         if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && grounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             grounded = false;
             FindObjectOfType<SoundmanagerScript>().PlayJumpSounds();
         }
@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         grounded = false;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Ground") grounded = true;
 
