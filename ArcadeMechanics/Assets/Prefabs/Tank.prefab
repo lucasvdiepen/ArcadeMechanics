@@ -204,8 +204,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDelay: 1
-  minDamage: 5
-  maxDamage: 15
+  minDamage: 10
+  maxDamage: 25
   canAttack: 0
 --- !u!114 &2567310270091232193
 MonoBehaviour:
@@ -572,7 +572,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8798975037487756016}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 32.667603, y: 32.667603, z: 32.667603}
   m_Children:
@@ -581,7 +581,7 @@ RectTransform:
   - {fileID: 2514436285505423519}
   m_Father: {fileID: 9107920574141841787}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
