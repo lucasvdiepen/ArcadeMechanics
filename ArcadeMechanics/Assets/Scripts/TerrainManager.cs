@@ -33,49 +33,63 @@ public class TerrainManager : MonoBehaviour
         if(activeTerrains.Count > 0)
         {
             //Add terrain
-            Transform[] lastTerrainChilds = activeTerrains[activeTerrains.Count - 1].GetComponentsInChildren<Transform>();
-
-            Transform lastTerrainEndPoint = GetEndPoint(lastTerrainChilds);
+            Transform lastTerrainEndPoint = GetEndPoint(activeTerrains[activeTerrains.Count - 1]);
 
             if (cameraRightPosition.x >= lastTerrainEndPoint.position.x - terrainOffset)
             {
-                if (currentGroupCount > terrainGroup)
-                {
-                    currentGroupCount = 0;
-                    terrainIndex = Random.Range(0, terrains.Length);
-                }
-
-                GameObject newTerrain = Instantiate(terrains[terrainIndex]);
-                newTerrain.transform.position = new Vector3(lastTerrainEndPoint.position.x, newTerrain.transform.position.y, newTerrain.transform.position.z);
-
-                activeTerrains.Add(newTerrain);
-
-                currentGroupCount++;
-
-                //Generate obstacles in this terrain
-                //FindObjectOfType<ObstacleManager>().GenerateObstacles(newTerrain.transform.position);
+                SpawnTerrain(lastTerrainEndPoint.position);
             }
 
             //Remove terrain
-            Transform[] firstTerrainChilds = activeTerrains[0].GetComponentsInChildren<Transform>();
-
-            Transform firstTerrainEndPoint = GetEndPoint(firstTerrainChilds);
+            Transform firstTerrainEndPoint = GetEndPoint(activeTerrains[0]);
           
             if (firstTerrainEndPoint.position.x + terrainOffset < cameraLeftPosition.x)
             {
-                Destroy(activeTerrains[0]);
-
                 //Remove all obstacles in this terrain
                 FindObjectOfType<ObstacleManager>().RemoveObstaclesBetween(activeTerrains[0].transform.position.x, firstTerrainEndPoint.position.x);
+
+                Destroy(activeTerrains[0]);
 
                 activeTerrains.RemoveAt(0);
             }
         }
     }
 
-    public static Transform GetEndPoint(Transform[] childs)
+    public Vector3 PrepareForBoss()
     {
-        foreach(Transform childTransform in childs)
+        Transform lastEndPoint = GetEndPoint(activeTerrains[activeTerrains.Count - 1]);
+
+        Transform newEndPoint = SpawnTerrain(lastEndPoint.position);
+
+        return newEndPoint.position;
+    }
+
+    private Transform SpawnTerrain(Vector3 lastTerrainEndPoint)
+    {
+        if (currentGroupCount > terrainGroup)
+        {
+            currentGroupCount = 0;
+            terrainIndex = Random.Range(0, terrains.Length);
+        }
+
+        GameObject newTerrain = Instantiate(terrains[terrainIndex]);
+        newTerrain.transform.position = new Vector3(lastTerrainEndPoint.x, newTerrain.transform.position.y, newTerrain.transform.position.z);
+
+        activeTerrains.Add(newTerrain);
+
+        currentGroupCount++;
+
+        //Generate obstacles in this terrain
+        //FindObjectOfType<ObstacleManager>().GenerateObstacles(newTerrain.transform.position);
+
+        return GetEndPoint(newTerrain);
+    }
+
+    public static Transform GetEndPoint(GameObject terrain)
+    {
+        Transform[] children = terrain.GetComponentsInChildren<Transform>();
+
+        foreach(Transform childTransform in children)
         {
             if (childTransform.name == "EndPoint") return childTransform;
         }

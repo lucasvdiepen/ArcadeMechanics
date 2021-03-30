@@ -26,17 +26,12 @@ public class BackgroundManager : MonoBehaviour
         if(activeBackgrounds.Count > 0)
         {
             Vector3 cameraRightPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
-
             Vector3 cameraLeftPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane));
 
-            Transform[] lastBackground = activeBackgrounds[activeBackgrounds.Count - 1].GetComponentsInChildren<Transform>();
-
-            Transform lastBackgroundEndpoint = TerrainManager.GetEndPoint(lastBackground);
-
+            Transform lastBackgroundEndpoint = TerrainManager.GetEndPoint(activeBackgrounds[activeBackgrounds.Count - 1]);
             if (lastBackgroundEndpoint.position.x < (cameraRightPosition.x + spawnBackgroundOffset))
             {
                 //Spawn new background
-
                 int rndIndex = Random.Range(0, backgrounds.Length);
 
                 GameObject newBackground = Instantiate(backgrounds[rndIndex]);
@@ -45,9 +40,8 @@ public class BackgroundManager : MonoBehaviour
                 activeBackgrounds.Add(newBackground);
             }
 
-            Transform[] firstBackground = activeBackgrounds[0].GetComponentsInChildren<Transform>();
-
-            if (TerrainManager.GetEndPoint(firstBackground).position.x + spawnBackgroundOffset < cameraLeftPosition.x)
+            Transform firstBackgroundEndpoint = TerrainManager.GetEndPoint(activeBackgrounds[0]);
+            if (firstBackgroundEndpoint.position.x + spawnBackgroundOffset < cameraLeftPosition.x)
             {
                 //Remove first background
                 Destroy(activeBackgrounds[0]);

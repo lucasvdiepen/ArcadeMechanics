@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public CameraMovement cameraMovement;
+    public GameManager gameManager;
+
     public float startingSpeed = 5f;
     private float speed = 5f;
     public float jumpForce = 5f;
     public float wallOffset = 1f;
     public bool playerRunAutomatic = false;
+    public bool freezeMovement = false;
 
     public Vector3 startPosition;
 
     private Rigidbody2D rb;
-    public bool grounded = false;
+    [HideInInspector] public bool grounded = false;
 
     void Start()
     {
@@ -25,27 +29,34 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(playerRunAutomatic)
+        if(!gameManager.isPaused && !freezeMovement)
         {
-            transform.Translate(speed * Time.deltaTime, 0, 0, Space.World);
-
-            MoveBackroundAndClouds(1, speed);
-        }
-        else
-        {
-            //Player can be controlled
-
-            int moveDirection = 0;
-
-            Vector3 cameraLeftPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane));
-
-            //Get movement input
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection -= 1;
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) moveDirection += 1;
-
-            if (transform.position.x > cameraLeftPosition.x + wallOffset || moveDirection == 1)
+            if (playerRunAutomatic)
             {
-                if(!FindObjectOfType<GameManager>().isPaused)
+                transform.Translate(speed * Time.deltaTime, 0, 0, Space.World);
+
+                MoveBackroundAndClouds(1, speed);
+            }
+            else
+            {
+                //Player can be controlled
+
+                int moveDirection = 0;
+
+                Vector3 cameraLeftPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane));
+                Vector3 cameraRightPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+
+                //Get movement input
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection -= 1;
+                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) moveDirection += 1;
+
+                bool canMove = true;
+
+                if (transform.position.x <= cameraLeftPosition.x + wallOffset && moveDirection == -1) canMove = false;
+
+                if (cameraMovement.freezeCameraMovement && transform.position.x >= cameraRightPosition.x - wallOffset && moveDirection == 1) canMove = false;
+
+                if (canMove)
                 {
                     //Move
                     if (moveDirection == -1)
@@ -61,23 +72,23 @@ public class PlayerMovement : MonoBehaviour
 
                     //Move the background
                     MoveBackroundAndClouds(moveDirection, speed);
+
                 }
             }
-        }
-        
 
-        //Jump
-        if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && grounded)
-        {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            grounded = false;
-            FindObjectOfType<SoundmanagerScript>().PlayJumpSounds();
+            //Jump
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && grounded)
+            {
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                grounded = false;
+                FindObjectOfType<SoundmanagerScript>().PlayJumpSounds();
+            }
         }
     }
 
     private void MoveBackroundAndClouds(int moveDirection, float speed)
     {
-        if (transform.position.x > Camera.main.transform.position.x)
+        if (transform.position.x > Camera.main.transform.position.x && !FindObjectOfType<CameraMovement>().freezeCameraMovement)
         {
             FindObjectOfType<BackgroundManager>().MoveBackground(moveDirection, speed);
             FindObjectOfType<CloudsManager>().MoveClouds(moveDirection, speed);
@@ -88,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
     {
         speed = startingSpeed;
         transform.position = startPosition;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        playerRunAutomatic = true;
         grounded = false;
     }
 
@@ -97,8 +110,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.transform.tag == "Obstacle")
         {
-            FindObjectOfType<GameManager>().Die();
+            gameManager.Die();
         }
-
     }
 }   
