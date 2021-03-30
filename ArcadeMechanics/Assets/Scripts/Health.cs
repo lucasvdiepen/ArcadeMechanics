@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    public Slider healthBar;
+
     public int startingHealth = 100;
     public int health = 0;
+
+    public bool isBoss = false;
 
     private void Start()
     {
@@ -16,15 +21,30 @@ public class Health : MonoBehaviour
     {
         health -= damage;
 
+        healthBar.value = health;
+
         if(health <= 0)
         {
             //Dead
-            FindObjectOfType<GameManager>().Die();
+            if(!isBoss)
+            {
+                FindObjectOfType<GameManager>().Die();
+            }
+            else
+            {
+                //Remove enemy
+                FindObjectOfType<ObstacleManager>().BossKilled(transform.position);
+                Destroy(gameObject);
+            }
         }
     }
 
     public void ResetHealth()
     {
-        health = startingHealth;
+        if(!isBoss)
+        {
+            health = startingHealth;
+            healthBar.value = health;
+        }
     }
 }
