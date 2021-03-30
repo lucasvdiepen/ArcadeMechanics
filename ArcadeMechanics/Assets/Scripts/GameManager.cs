@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,8 @@ public class GameManager : MonoBehaviour
 
     public Transform player;
     public Health playerHealth;
-    public Text scoreText;
-    public Text highscoreText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highscoreText;
     public Canvas pauseScreen;
 
     private int score = 0;
@@ -37,16 +38,19 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
-        float newSpeed = score / speedIncreaseAt * speedIncrease;
-        if(currentSpeed != newSpeed)
+        if(!obstacleManager.bossActive && !playerMovement.speedingUp)
         {
-            currentSpeed = newSpeed;
-            playerMovement.speed = currentSpeed + playerMovement.startingSpeed;
+            float newSpeed = score / speedIncreaseAt * speedIncrease;
+            if(currentSpeed != newSpeed)
+            {
+                currentSpeed = newSpeed;
+                playerMovement.speed = currentSpeed + playerMovement.startingSpeed;
 
-            obstacleManager.minObstacleDistance = currentSpeed + obstacleManager.startingMinObstacleDistance;
-            obstacleManager.maxObstacleDistance = currentSpeed + obstacleManager.startingMaxObstacleDistance;
+                obstacleManager.minObstacleDistance = currentSpeed + obstacleManager.startingMinObstacleDistance;
+                obstacleManager.maxObstacleDistance = currentSpeed + obstacleManager.startingMaxObstacleDistance;
 
-            Debug.Log("New speed: " + currentSpeed);
+                Debug.Log("New speed: " + currentSpeed);
+            }
         }
 
         /*if(score % speedIncreaseAt == 0)

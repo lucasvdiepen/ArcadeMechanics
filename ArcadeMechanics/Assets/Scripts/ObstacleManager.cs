@@ -31,7 +31,7 @@ public class ObstacleManager : MonoBehaviour
     public float bossCameraRightOffset = 1f;
     public float bossKilledResumeOffset = 2f;
 
-    private bool bossActive = false;
+    [HideInInspector] public bool bossActive = false;
     private BossType bossType;
     private Vector3 bossLastPosition = Vector3.zero;
     private bool bossKilled = false;
@@ -88,6 +88,7 @@ public class ObstacleManager : MonoBehaviour
                 {
                     smoothCamera = true;
                     FindObjectOfType<CameraMovement>().MoveSmoothToEnemy(lastObstacle.transform.position.x + bossCameraRightOffset);
+                    FindObjectOfType<PlayerMovement>().StartBoss();
                 }
 
                 //Check if player passed the obstacle boss
@@ -111,7 +112,10 @@ public class ObstacleManager : MonoBehaviour
         smoothCamera = false;
         bossKilled = false;
         StartObstacleSpawn();
-        FindObjectOfType<PlayerMovement>().playerRunAutomatic = true;
+        PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+        playerMovement.playerRunAutomatic = true;
+        playerMovement.StopBoss();
+        
     }
 
     public void BossKilled(Vector3 lastPosition)

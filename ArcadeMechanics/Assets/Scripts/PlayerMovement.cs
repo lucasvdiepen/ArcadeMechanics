@@ -14,6 +14,13 @@ public class PlayerMovement : MonoBehaviour
     public bool playerRunAutomatic = false;
     public bool freezeMovement = false;
 
+    public float speedUpTime = 1f;
+
+    private float oldSpeed = 0;
+    [HideInInspector] public bool speedingUp = false;
+
+    private float timeElapsed = 0;
+
     public Vector3 startPosition;
 
     private Rigidbody2D rb;
@@ -29,6 +36,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(speedingUp)
+        {
+            speed = Mathf.Lerp(startingSpeed, oldSpeed, timeElapsed / speedUpTime);
+            if (timeElapsed >= speedUpTime) speedingUp = false;
+
+            Debug.Log(speed);
+
+            timeElapsed += Time.deltaTime;
+        }
+
         if(!gameManager.isPaused && !freezeMovement)
         {
             if (playerRunAutomatic)
@@ -84,6 +101,17 @@ public class PlayerMovement : MonoBehaviour
                 FindObjectOfType<SoundmanagerScript>().PlayJumpSounds();
             }
         }
+    }
+
+    public void StartBoss()
+    {
+        oldSpeed = speed;
+        speed = startingSpeed;
+    }
+
+    public void StopBoss()
+    {
+        speedingUp = true;
     }
 
     private void MoveBackroundAndClouds(int moveDirection, float speed)
