@@ -86,6 +86,11 @@ public class ObstacleManager : MonoBehaviour
                 //Check when the camera should start to move smoothly to the enemy
                 if (cameraRightPosition.x >= lastObstacle.transform.position.x - bossSmoothCameraStartAtDistance && !smoothCamera)
                 {
+                    if (activeObstacles.Count > 1)
+                    {
+                        Destroy(activeObstacles[activeObstacles.Count - 2]);
+                        activeObstacles.RemoveAt(activeObstacles.Count - 2);
+                    }
                     smoothCamera = true;
                     FindObjectOfType<CameraMovement>().MoveSmoothToEnemy(lastObstacle.transform.position.x + bossCameraRightOffset);
                     FindObjectOfType<PlayerMovement>().StartBoss();
@@ -142,8 +147,14 @@ public class ObstacleManager : MonoBehaviour
     {
         if(bossType == BossType.Boss) FindObjectOfType<CameraMovement>().freezeCameraMovement = true;
 
-        GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
-        lastObstacle.GetComponent<Enemy>().canAttack = true;
+        if(activeObstacles.Count > 0)
+        {
+            GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
+            if(lastObstacle.transform.tag == "Enemy")
+            {
+                lastObstacle.GetComponent<Enemy>().canAttack = true;
+            }
+        }
         FindObjectOfType<PlayerMovement>().freezeMovement = false;
         FindObjectOfType<PlayerMovement>().playerRunAutomatic = false;
     }
