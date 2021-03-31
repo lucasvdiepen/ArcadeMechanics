@@ -25,7 +25,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.F))
             {
-                gunScript.Shoot();
+                gunScript.Shoot(transform.rotation.x);
             }
 
             if(Input.GetKeyDown(KeyCode.R))

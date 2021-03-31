@@ -157,8 +157,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8957a0d850c2e40aef6048817a8ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 4357517992356881110, guid: 85057dd70403bbc4c97d936310db288c, type: 3}
   bulletStartPoint: {fileID: 8559294577903644516}
   fireRate: 0.5
   startingBullets: 7
-  reloadTime: 3
+  reloadTime: 1.5
+  minDamage: 5
+  maxDamage: 15
+  bulletSpeed: 12
+  bulletSize: 3
   gunScale: {x: 0.5, y: 0.5, z: 0.5}
