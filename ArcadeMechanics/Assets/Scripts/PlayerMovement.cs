@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void ResetPlayer()
+    public void ResetPlayerMovement()
     {
         speed = startingSpeed;
         transform.position = startPosition;

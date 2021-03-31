@@ -10,27 +10,41 @@ public class Gun : MonoBehaviour
     public int startingBullets = 7;
     public float reloadTime = 3f;
 
+    public Vector3 gunScale;
+
     private int bullets = 0;
     private bool isReloading = false;
-    private bool canShoot = false;
+    private bool canShoot = true;
     private float lastShootTime = 0;
-    private float lastReloadTime = 0;
+
+    private float timeElapsed = 0;
 
     private void Start()
     {
+        isReloading = false;
+
+        transform.localScale = gunScale;
+
         bullets = startingBullets;
+
+        FindObjectOfType<PlayerAttack>().UpdateAmmoText(bullets);
     }
 
     private void Update()
     {
-        if(isReloading)
+        if (isReloading)
         {
-            float time = Time.deltaTime;
+            //Do rotation animation
+            transform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, 380, timeElapsed / reloadTime));
 
-            if (time > (lastReloadTime + reloadTime))
+            timeElapsed += Time.deltaTime;
+
+            if (timeElapsed >= reloadTime)
             {
                 //Reload
                 bullets = startingBullets;
+                FindObjectOfType<PlayerAttack>().UpdateAmmoText(bullets);
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
                 isReloading = false;
             }
         }
@@ -42,12 +56,17 @@ public class Gun : MonoBehaviour
         {
             if(bullets > 0)
             {
-                float time = Time.deltaTime;
+                float time = Time.time;
                 if (time >= (lastShootTime + fireRate))
                 {
                     lastShootTime = time;
 
+                    bullets -= 1;
+
+                    FindObjectOfType<PlayerAttack>().UpdateAmmoText(bullets);
+
                     //Fire bullet here
+                    Debug.Log("Shoot bullet");
                 }
             }    
         }
@@ -55,9 +74,9 @@ public class Gun : MonoBehaviour
 
     public void Reload()
     {
-        if(bullets != startingBullets)
+        if (bullets != startingBullets && !isReloading)
         {
-            lastReloadTime = Time.deltaTime;
+            timeElapsed = 0;
             isReloading = true;
         }
     }

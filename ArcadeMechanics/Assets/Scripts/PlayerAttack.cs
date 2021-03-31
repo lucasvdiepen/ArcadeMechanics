@@ -1,37 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public GameObject gunPosition;
+    public GameObject gunHolder;
+
+    public TextMeshProUGUI ammoText;
 
     private GameObject gun;
     private Gun gunScript;
 
+    public GameObject testGun;
+
+    private void Start()
+    {
+        SetGun(testGun);
+    }
+
     private void Update()
     {
-        if(Input.GetKey(KeyCode.F))
+        if (gunScript != null)
         {
-            gunScript.Shoot();
-        }
+            if(Input.GetKey(KeyCode.F))
+            {
+                gunScript.Shoot();
+            }
 
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            gunScript.Reload();
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                gunScript.Reload();
+            }
         }
+    }
+
+    public void UpdateAmmoText(int bullets)
+    {
+        ammoText.text = "Ammo: " + bullets;
     }
 
     public void SetGun(GameObject newGun)
     {
-        if(gun != null)
+        DestroyGun();
+
+        gun = Instantiate(newGun);
+        gun.transform.parent = gunHolder.transform;
+        gun.transform.localPosition = Vector3.zero;
+        gunScript = gun.GetComponent<Gun>();
+    }
+
+    private void DestroyGun()
+    {
+        if (gun != null)
         {
             Destroy(gun);
             gun = null;
             gunScript = null;
         }
+    }
 
-        gun = Instantiate(newGun, gunPosition.transform.position, Quaternion.identity);
-        gunScript = newGun.GetComponent<Gun>();
+    public void ResetPlayerAttack()
+    {
+        DestroyGun();
+        UpdateAmmoText(0);
     }
 }
