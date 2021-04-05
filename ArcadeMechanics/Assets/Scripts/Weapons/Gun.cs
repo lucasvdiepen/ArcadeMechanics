@@ -62,7 +62,7 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void Shoot(float xRotation)
+    public void Shoot(int moveDirection)
     {
         if(canShoot && !isReloading)
         {
@@ -78,12 +78,6 @@ public class Gun : MonoBehaviour
                     FindObjectOfType<PlayerAttack>().UpdateAmmoText(bullets);
 
                     //Fire bullet here
-                    Debug.Log("Shoot bullet");
-
-                    int moveDirection = 0;
-
-                    if (xRotation == 0) moveDirection = 1;
-                    else if (xRotation == 180) moveDirection = -1;
 
                     ShootBullet(bullet, bulletStartPoint.transform, bulletSpeed, bulletSize, moveDirection);
                 }

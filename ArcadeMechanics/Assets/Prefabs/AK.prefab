@@ -159,11 +159,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 4357517992356881110, guid: 85057dd70403bbc4c97d936310db288c, type: 3}
   bulletStartPoint: {fileID: 9014196446634938616}
-  fireRate: 0.05
+  fireRate: 0.08
   startingBullets: 30
   reloadTime: 2.5
   minDamage: 3
-  maxDamage: 10
+  maxDamage: 7
   bulletSpeed: 15
   bulletSize: 3
   gunScale: {x: 0.5, y: 0.5, z: 0.5}

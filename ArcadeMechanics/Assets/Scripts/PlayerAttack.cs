@@ -11,11 +11,14 @@ public class PlayerAttack : MonoBehaviour
 
     private GameObject gun;
     private Gun gunScript;
+    private PlayerMovement playerMovement;
 
     public GameObject testGun;
 
     private void Start()
     {
+        playerMovement = GetComponent<PlayerMovement>();
+
         SetGun(testGun);
     }
 
@@ -25,7 +28,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.F))
             {
-                gunScript.Shoot(transform.rotation.x);
+                gunScript.Shoot(playerMovement.lastMoveDirection);
             }
 
             if(Input.GetKeyDown(KeyCode.R))

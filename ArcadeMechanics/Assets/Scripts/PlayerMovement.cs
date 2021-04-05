@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     [HideInInspector] public bool grounded = false;
 
+    [HideInInspector] public int lastMoveDirection = 0;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,11 +63,13 @@ public class PlayerMovement : MonoBehaviour
                     //Move
                     if (moveDirection == -1)
                     {
+                        lastMoveDirection = -1;
                         transform.rotation = Quaternion.Euler(0, 180, 0);
                         transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
                     }
                     else if (moveDirection == 1)
                     {
+                        lastMoveDirection = 1;
                         transform.rotation = Quaternion.Euler(0, 0, 0);
                         transform.Translate(moveDirection * speed * Time.deltaTime, 0, 0, Space.World);
                     }

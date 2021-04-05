@@ -1406,6 +1406,7 @@ MonoBehaviour:
   freezeMovement: 0
   startPosition: {x: 0, y: -1.58, z: -4.61}
   grounded: 0
+  lastMoveDirection: 0
 --- !u!61 &1256849777
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1499,7 +1500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunHolder: {fileID: 1652671317}
   ammoText: {fileID: 805434597}
-  testGun: {fileID: 8559294578361096424, guid: 52d1ebba9ee45684ca93c6d3d8bc8760, type: 3}
+  testGun: {fileID: 9014196447401281065, guid: a6c2d407569760d44926bc02b6a0163f, type: 3}
 --- !u!1 &1397154954
 GameObject:
   m_ObjectHideFlags: 0
