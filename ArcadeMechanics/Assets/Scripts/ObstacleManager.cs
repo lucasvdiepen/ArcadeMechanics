@@ -18,20 +18,32 @@ public class ObstacleManager : MonoBehaviour
 
     public float spawnObstacleOffset = 1f;
 
+    public float obstacleSmoothCameraStartAtDistance = 5.3f;
+    public float obstacleCameraRightOffset = 2f;
+
+    private ObstacleType obstacleType;
+
     [Header("Bosses")]
 
     public GameObject[] obstacleBosses;
     public GameObject[] bosses;
 
     public int bossAfterObstacles = 50;
-    public float bossSmoothCameraStartAtDistance = 5f;
-    public float bossCameraRightOffset = 1f;
     public float bossKilledResumeOffset = 2f;
 
+    [Range(0, 100)]
+    public int obstacleBossChance = 50;
+
     private bool bossActive = false;
-    private BossType bossType;
     private Vector3 bossLastPosition = Vector3.zero;
     private bool bossKilled = false;
+
+    [Header("Shop")]
+
+    public GameObject shop;
+    public int shopAfterObstacles = 15;
+
+    private bool shopActive = false;
 
     private List<GameObject> activeObstacles = new List<GameObject>();
 
@@ -41,14 +53,13 @@ public class ObstacleManager : MonoBehaviour
 
     private bool smoothCamera = false;
 
-    [Range(0, 100)]
-    public int obstacleBossChance = 50;
 
 
-    private enum BossType
+    private enum ObstacleType
     {
         ObstacleBoss,
-        Boss
+        Boss,
+        Shop
     }
 
     void Update()
@@ -56,7 +67,7 @@ public class ObstacleManager : MonoBehaviour
         Vector3 cameraRightPosition = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
         Vector3 cameraLeftPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane));
 
-        //check if obstacles should be spawned
+        //Check if obstacles should be spawned
         if (cameraRightPosition.x >= lastObstacleX - spawnObstacleOffset)
         {
             SpawnObstacle();
@@ -68,37 +79,44 @@ public class ObstacleManager : MonoBehaviour
             SpawnBoss();
         }
 
-        if(activeObstacles.Count > 0 && bossActive)
+        //Check if shop should be spawned
+        if(spawnedObstacles % shopAfterObstacles == 0 && !shopActive && !bossActive)
+        {
+            SpawnShop();
+        }
+
+        if(activeObstacles.Count > 0 && (bossActive || shopActive))
         {
             GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
 
-            if (lastObstacle.transform.tag == "Enemy")
+            if (lastObstacle.transform.tag == "Enemy" || lastObstacle.transform.tag == "Shop")
             {
-                //Check when the camera should start to move smoothly to the enemy
-                if (cameraRightPosition.x >= lastObstacle.transform.position.x - bossSmoothCameraStartAtDistance && !smoothCamera)
+                //Check when the camera should start to move smoothly to the obstacle
+                if (cameraRightPosition.x >= lastObstacle.transform.position.x - obstacleSmoothCameraStartAtDistance && !smoothCamera)
                 {
                     smoothCamera = true;
-                    FindObjectOfType<CameraMovement>().MoveSmoothToEnemy(lastObstacle.transform.position.x + bossCameraRightOffset);
+                    FindObjectOfType<CameraMovement>().MoveSmoothToObstacle(lastObstacle.transform.position.x + obstacleCameraRightOffset);
                 }
 
-                //Check if player passed the obstacle boss
-                if (cameraLeftPosition.x >= lastObstacle.transform.position.x && bossType == BossType.ObstacleBoss)
+                //Check if player passed the obstacle
+                if (cameraLeftPosition.x >= lastObstacle.transform.position.x && (obstacleType == ObstacleType.ObstacleBoss || obstacleType == ObstacleType.Shop))
                 {
-                    BossDone();
+                    ObstacleDone();
                 }
             }
         }
 
         //Check if player passed the boss last position
-        if (cameraLeftPosition.x >= bossLastPosition.x + bossKilledResumeOffset && bossKilled && bossType == BossType.Boss)
+        if (cameraLeftPosition.x >= bossLastPosition.x + bossKilledResumeOffset && bossKilled && obstacleType == ObstacleType.Boss)
         {
-            BossDone();
+            ObstacleDone();
         }
     }
 
-    public void BossDone()
+    public void ObstacleDone()
     {
         bossActive = false;
+        shopActive = false;
         smoothCamera = false;
         bossKilled = false;
         StartObstacleSpawn();
@@ -107,7 +125,7 @@ public class ObstacleManager : MonoBehaviour
 
     public void BossKilled(Vector3 lastPosition)
     {
-        if (bossType == BossType.Boss)
+        if (obstacleType == ObstacleType.Boss)
         {
             if (activeObstacles.Count > 0) activeObstacles.RemoveAt(activeObstacles.Count - 1);
 
@@ -125,14 +143,34 @@ public class ObstacleManager : MonoBehaviour
         bossKilled = true;
     }
 
-    public void SmoothCameraAnimationToEnemyDone()
+    public void SmoothCameraAnimationToObstacleDone()
     {
-        if(bossType == BossType.Boss) FindObjectOfType<CameraMovement>().freezeCameraMovement = true;
+        if(obstacleType == ObstacleType.Boss) FindObjectOfType<CameraMovement>().freezeCameraMovement = true;
 
-        GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
-        lastObstacle.GetComponent<Enemy>().canAttack = true;
+        if(obstacleType == ObstacleType.Boss || obstacleType == ObstacleType.ObstacleBoss)
+        {
+            GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
+            lastObstacle.GetComponent<Enemy>().canAttack = true;
+        }
+
         FindObjectOfType<PlayerMovement>().freezeMovement = false;
         FindObjectOfType<PlayerMovement>().playerRunAutomatic = false;
+    }
+
+    private void SpawnShop()
+    {
+        StopObstacleSpawn();
+
+        obstacleType = ObstacleType.Shop;
+
+        Vector3 shopSpawnPosition = FindObjectOfType<TerrainManager>().PrepareForObstacle();
+
+        GameObject newShop = Instantiate(shop);
+        newShop.transform.position = new Vector3(shopSpawnPosition.x, newShop.transform.position.y, newShop.transform.position.z);
+
+        activeObstacles.Add(newShop);
+
+        shopActive = true;
     }
 
     private void SpawnBoss()
@@ -146,17 +184,17 @@ public class ObstacleManager : MonoBehaviour
         {
             int rndIndex = Random.Range(0, obstacleBosses.Length);
             bossToSpawn = obstacleBosses[rndIndex];
-            bossType = BossType.ObstacleBoss;
+            obstacleType = ObstacleType.ObstacleBoss;
         }
         else
         {
             int rndIndex = Random.Range(0, bosses.Length);
             bossToSpawn = bosses[rndIndex];
-            bossType = BossType.Boss;
+            obstacleType = ObstacleType.Boss;
         }
 
         //Create new terrain for boss
-        Vector3 bossSpawnPosition = FindObjectOfType<TerrainManager>().PrepareForBoss();
+        Vector3 bossSpawnPosition = FindObjectOfType<TerrainManager>().PrepareForObstacle();
 
         //Spawn new boss
         GameObject newBoss = Instantiate(bossToSpawn);

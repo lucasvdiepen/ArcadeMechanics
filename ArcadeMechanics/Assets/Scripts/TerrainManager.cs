@@ -55,7 +55,7 @@ public class TerrainManager : MonoBehaviour
         }
     }
 
-    public Vector3 PrepareForBoss()
+    public Vector3 PrepareForObstacle()
     {
         Transform lastEndPoint = GetEndPoint(activeTerrains[activeTerrains.Count - 1]);
 

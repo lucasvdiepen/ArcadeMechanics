@@ -1500,7 +1500,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunHolder: {fileID: 1652671317}
   ammoText: {fileID: 805434597}
-  testGun: {fileID: 9014196447401281065, guid: a6c2d407569760d44926bc02b6a0163f, type: 3}
 --- !u!1 &1397154954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1783,16 +1782,18 @@ MonoBehaviour:
   minObstacleDistance: 11
   maxObstacleDistance: 16
   spawnObstacleOffset: 1
+  obstacleSmoothCameraStartAtDistance: 5.3
+  obstacleCameraRightOffset: 2
   obstacleBosses:
   - {fileID: 8481317505086264708, guid: 110bc53900ac95d41b42405bf492cbeb, type: 3}
   - {fileID: 737232364073932342, guid: 5d0f34594f1d0024eaaa5c09a17bda76, type: 3}
   bosses:
   - {fileID: 3560934112410868779, guid: b6a06f75d91d3b040b0c068ff3f7819c, type: 3}
   bossAfterObstacles: 15
-  bossSmoothCameraStartAtDistance: 5.3
-  bossCameraRightOffset: 2
   bossKilledResumeOffset: 2
   obstacleBossChance: 50
+  shop: {fileID: 4202583619622687825, guid: 5759c6a65b8db8449b970490f0f974d8, type: 3}
+  shopAfterObstacles: 25
 --- !u!1 &1914491372
 GameObject:
   m_ObjectHideFlags: 0
