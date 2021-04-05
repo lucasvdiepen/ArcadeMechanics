@@ -13,13 +13,9 @@ public class PlayerAttack : MonoBehaviour
     private Gun gunScript;
     private PlayerMovement playerMovement;
 
-    public GameObject testGun;
-
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-
-        SetGun(testGun);
     }
 
     private void Update()
