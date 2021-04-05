@@ -47,9 +47,7 @@ public class Gun : MonoBehaviour
         if (isReloading)
         {
             //Do rotation animation
-            Debug.Log(timeElapsed / reloadTime);
-            transform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, 380, timeElapsed / reloadTime));
-            //transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 0, 360), timeElapsed / reloadTime);
+            transform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, 360, timeElapsed / reloadTime));
 
             timeElapsed += Time.deltaTime;
 
