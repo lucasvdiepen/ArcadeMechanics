@@ -2101,7 +2101,6 @@ RectTransform:
   m_LocalScale: {x: 1.1725, y: 1.2164688, z: 1.1725}
   m_Children: []
 <<<<<<< HEAD:ArcadeMechanics/Assets/Scenes/UI.unity
-  m_Father: {fileID: 424615644}
 =======
   m_Father: {fileID: 2016780689}
 >>>>>>> 4afb7a6b2038b622341c39727b97c8f6f2cea1ad:ArcadeMechanics/Assets/Scenes/MainScene.unity
