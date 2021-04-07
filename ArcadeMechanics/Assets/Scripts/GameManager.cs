@@ -1,27 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
-    public ObstacleManager obstacleManager;
-
     public Transform player;
     public Health playerHealth;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI highscoreText;
+    public Text scoreText;
+    public Text highscoreText;
     public Canvas pauseScreen;
 
     private int score = 0;
     private int highscore = 0;
     public bool isPaused = false;
-    public int speedIncreaseAt = 50;
-    public float speedIncrease = 0.15f;
-
-    private float currentSpeed = 0;
 
     void Start()
     {
@@ -36,31 +28,7 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
-        }
-
-        if(!obstacleManager.bossActive && !playerMovement.speedingUp)
-        {
-            float newSpeed = score / speedIncreaseAt * speedIncrease;
-            if(currentSpeed != newSpeed)
-            {
-                currentSpeed = newSpeed;
-                playerMovement.speed = currentSpeed + playerMovement.startingSpeed;
-
-                obstacleManager.minObstacleDistance = currentSpeed + obstacleManager.startingMinObstacleDistance;
-                obstacleManager.maxObstacleDistance = currentSpeed + obstacleManager.startingMaxObstacleDistance;
-
-                Debug.Log("New speed: " + currentSpeed);
-            }
-        }
-
-        /*if(score % speedIncreaseAt == 0)
-        {
-            float multiplier = 1 + (score / speedIncreaseAt * speedIncrease);
-            Debug.Log("Multiplier: " + multiplier);
-            PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
-            playerMovement.speed = playerMovement.startingSpeed * multiplier;
-            Debug.Log(playerMovement.speed);
-        }*/
+        }    
     }
 
     private void Pause()

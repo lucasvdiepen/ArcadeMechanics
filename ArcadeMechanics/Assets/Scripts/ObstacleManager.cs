@@ -11,11 +11,8 @@ public class ObstacleManager : MonoBehaviour
 
     public GameObject[] obstacles;
 
-    public float startingMinObstacleDistance = 6f;
-    public float startingMaxObstacleDistance = 15f;
-
-    [HideInInspector] public float minObstacleDistance = 6f;
-    [HideInInspector] public float maxObstacleDistance = 15f;
+    public float minObstacleDistance = 6f;
+    public float maxObstacleDistance = 15f;
 
     private float lastObstacleX = 0f;
 
@@ -31,7 +28,7 @@ public class ObstacleManager : MonoBehaviour
     public float bossCameraRightOffset = 1f;
     public float bossKilledResumeOffset = 2f;
 
-    [HideInInspector] public bool bossActive = false;
+    private bool bossActive = false;
     private BossType bossType;
     private Vector3 bossLastPosition = Vector3.zero;
     private bool bossKilled = false;
@@ -52,12 +49,6 @@ public class ObstacleManager : MonoBehaviour
     {
         ObstacleBoss,
         Boss
-    }
-
-    private void Start()
-    {
-        minObstacleDistance = startingMinObstacleDistance;
-        maxObstacleDistance = startingMaxObstacleDistance;
     }
 
     void Update()
@@ -86,14 +77,8 @@ public class ObstacleManager : MonoBehaviour
                 //Check when the camera should start to move smoothly to the enemy
                 if (cameraRightPosition.x >= lastObstacle.transform.position.x - bossSmoothCameraStartAtDistance && !smoothCamera)
                 {
-                    if (activeObstacles.Count > 1)
-                    {
-                        Destroy(activeObstacles[activeObstacles.Count - 2]);
-                        activeObstacles.RemoveAt(activeObstacles.Count - 2);
-                    }
                     smoothCamera = true;
                     FindObjectOfType<CameraMovement>().MoveSmoothToEnemy(lastObstacle.transform.position.x + bossCameraRightOffset);
-                    FindObjectOfType<PlayerMovement>().StartBoss();
                 }
 
                 //Check if player passed the obstacle boss
@@ -117,10 +102,7 @@ public class ObstacleManager : MonoBehaviour
         smoothCamera = false;
         bossKilled = false;
         StartObstacleSpawn();
-        PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
-        playerMovement.playerRunAutomatic = true;
-        playerMovement.StopBoss();
-        
+        FindObjectOfType<PlayerMovement>().playerRunAutomatic = true;
     }
 
     public void BossKilled(Vector3 lastPosition)
@@ -147,14 +129,8 @@ public class ObstacleManager : MonoBehaviour
     {
         if(bossType == BossType.Boss) FindObjectOfType<CameraMovement>().freezeCameraMovement = true;
 
-        if(activeObstacles.Count > 0)
-        {
-            GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
-            if(lastObstacle.transform.tag == "Enemy")
-            {
-                lastObstacle.GetComponent<Enemy>().canAttack = true;
-            }
-        }
+        GameObject lastObstacle = activeObstacles[activeObstacles.Count - 1];
+        lastObstacle.GetComponent<Enemy>().canAttack = true;
         FindObjectOfType<PlayerMovement>().freezeMovement = false;
         FindObjectOfType<PlayerMovement>().playerRunAutomatic = false;
     }
