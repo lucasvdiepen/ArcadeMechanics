@@ -109,7 +109,7 @@ public class ObstacleManager : MonoBehaviour
                     }
                     smoothCamera = true;
 
-                    FindObjectOfType<PlayerMovement>().StartBoss();
+                    FindObjectOfType<PlayerMovement>().StartObstacle();
                     FindObjectOfType<CameraMovement>().MoveSmoothToObstacle(lastObstacle.transform.position.x + obstacleCameraRightOffset);
                 }
 
@@ -139,7 +139,7 @@ public class ObstacleManager : MonoBehaviour
         StartObstacleSpawn();
         PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
         playerMovement.playerRunAutomatic = true;
-        playerMovement.StopBoss();
+        playerMovement.StopObstacle();
         
     }
 

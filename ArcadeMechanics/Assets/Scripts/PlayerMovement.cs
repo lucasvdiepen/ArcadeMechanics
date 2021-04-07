@@ -107,13 +107,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void StartBoss()
+    public void StartObstacle()
     {
         oldSpeed = speed;
         speed = startingSpeed;
     }
 
-    public void StopBoss()
+    public void StopObstacle()
     {
         timeElapsed = 0;
         speedingUp = true;
