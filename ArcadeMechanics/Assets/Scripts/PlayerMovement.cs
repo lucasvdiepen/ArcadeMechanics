@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 5f;
     public float wallOffset = 1f;
     public bool playerRunAutomatic = false;
-    public bool freezeMovement = false;
+    [HideInInspector] public bool freezeMovement = false;
 
     public Vector3 startPosition;
 
@@ -117,4 +117,6 @@ public class PlayerMovement : MonoBehaviour
             gameManager.Die();
         }
     }
+
+    
 }   

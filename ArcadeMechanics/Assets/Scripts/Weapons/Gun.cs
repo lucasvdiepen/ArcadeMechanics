@@ -29,6 +29,8 @@ public class Gun : MonoBehaviour
 
     private GameObject player;
 
+    private int bulletsToReload = 0;
+
     private void Start()
     {
         isReloading = false;
@@ -37,7 +39,7 @@ public class Gun : MonoBehaviour
 
         bullets = startingBullets;
 
-        FindObjectOfType<PlayerAttack>().UpdateAmmoText(bullets);
+        FindObjectOfType<PlayerAttack>().SetLoadedBullets(bullets);
 
         player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -54,9 +56,12 @@ public class Gun : MonoBehaviour
             if (timeElapsed >= reloadTime)
             {
                 //Reload
-                bullets = startingBullets;
-                FindObjectOfType<PlayerAttack>().UpdateAmmoText(bullets);
-                //transform.localRotation = Quaternion.Euler(0, 0, 0);
+                bullets = bulletsToReload;
+
+                FindObjectOfType<PlayerAttack>().SetLoadedBullets(bullets);
+
+                FindObjectOfType<PlayerAttack>().RemoveBullets(bulletsToReload);
+
                 isReloading = false;
             }
         }
@@ -75,7 +80,7 @@ public class Gun : MonoBehaviour
 
                     bullets -= 1;
 
-                    FindObjectOfType<PlayerAttack>().UpdateAmmoText(bullets);
+                    FindObjectOfType<PlayerAttack>().SetLoadedBullets(bullets);
 
                     //Fire bullet here
 
@@ -89,8 +94,12 @@ public class Gun : MonoBehaviour
     {
         if (bullets != startingBullets && !isReloading)
         {
-            timeElapsed = 0;
-            isReloading = true;
+            bulletsToReload = FindObjectOfType<PlayerAttack>().GetReloadAmount(startingBullets);
+            if (bulletsToReload != 0)
+            {
+                timeElapsed = 0;
+                isReloading = true;
+            }
         }
     }
     private void ShootBullet(GameObject bullet, Transform bulletSpawnPoint, float bulletSpeed, float size, int moveDirection)

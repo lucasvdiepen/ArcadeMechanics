@@ -53,8 +53,6 @@ public class ObstacleManager : MonoBehaviour
 
     private bool smoothCamera = false;
 
-
-
     private enum ObstacleType
     {
         ObstacleBoss,
@@ -115,6 +113,8 @@ public class ObstacleManager : MonoBehaviour
 
     public void ObstacleDone()
     {
+        if (obstacleType == ObstacleType.Shop) FindObjectOfType<PlayerAttack>().shootingAllowed = true;
+
         bossActive = false;
         shopActive = false;
         smoothCamera = false;
@@ -146,6 +146,8 @@ public class ObstacleManager : MonoBehaviour
     public void SmoothCameraAnimationToObstacleDone()
     {
         if(obstacleType == ObstacleType.Boss) FindObjectOfType<CameraMovement>().freezeCameraMovement = true;
+
+        if (obstacleType == ObstacleType.Shop) FindObjectOfType<PlayerAttack>().shootingAllowed = false;
 
         if(obstacleType == ObstacleType.Boss || obstacleType == ObstacleType.ObstacleBoss)
         {
@@ -260,6 +262,7 @@ public class ObstacleManager : MonoBehaviour
 
         shouldSpawn = true;
         bossActive = false;
+        shopActive = false;
         smoothCamera = false;
 
         lastObstacleX = 0;
