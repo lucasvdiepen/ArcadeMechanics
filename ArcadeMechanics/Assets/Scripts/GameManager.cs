@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(!obstacleManager.bossActive && !playerMovement.speedingUp)
+        if(!obstacleManager.bossActive && !obstacleManager.shopActive && !playerMovement.speedingUp)
         {
             float newSpeed = score / speedIncreaseAt * speedIncrease;
             if(currentSpeed != newSpeed)

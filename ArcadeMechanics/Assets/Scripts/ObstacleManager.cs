@@ -47,7 +47,9 @@ public class ObstacleManager : MonoBehaviour
     public GameObject shop;
     public int shopAfterObstacles = 15;
 
-    private bool shopActive = false;
+    [HideInInspector] public bool shopActive = false;
+
+    private bool shopPending = false;
 
     private List<GameObject> activeObstacles = new List<GameObject>();
 
@@ -88,8 +90,15 @@ public class ObstacleManager : MonoBehaviour
         }
 
         //Check if shop should be spawned
-        if(spawnedObstacles % shopAfterObstacles == 0 && !shopActive && !bossActive)
+        if(spawnedObstacles % shopAfterObstacles == 0 && !shopActive && !shopPending)
         {
+            SpawnShop();
+        }
+
+        //Check if a shop should be spawned when boss is done
+        if(!bossActive && shopPending)
+        {
+            shopPending = false;
             SpawnShop();
         }
 
@@ -190,18 +199,22 @@ public class ObstacleManager : MonoBehaviour
 
     private void SpawnShop()
     {
-        StopObstacleSpawn();
+        if (!bossActive)
+        {
+            StopObstacleSpawn();
 
-        obstacleType = ObstacleType.Shop;
+            obstacleType = ObstacleType.Shop;
 
-        Vector3 shopSpawnPosition = FindObjectOfType<TerrainManager>().PrepareForObstacle();
+            Vector3 shopSpawnPosition = FindObjectOfType<TerrainManager>().PrepareForObstacle();
 
-        GameObject newShop = Instantiate(shop);
-        newShop.transform.position = new Vector3(shopSpawnPosition.x, newShop.transform.position.y, newShop.transform.position.z);
+            GameObject newShop = Instantiate(shop);
+            newShop.transform.position = new Vector3(shopSpawnPosition.x, newShop.transform.position.y, newShop.transform.position.z);
 
-        activeObstacles.Add(newShop);
+            activeObstacles.Add(newShop);
 
-        shopActive = true;
+            shopActive = true;
+        }
+        else shopPending = true;
     }
 
     private void SpawnBoss()
@@ -292,6 +305,7 @@ public class ObstacleManager : MonoBehaviour
         shouldSpawn = true;
         bossActive = false;
         shopActive = false;
+        shopPending = false;
         smoothCamera = false;
 
         lastObstacleX = 0;

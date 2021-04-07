@@ -3889,6 +3889,7 @@ MonoBehaviour:
   obstacleBossChance: 50
   shop: {fileID: 4202583619622687825, guid: 5759c6a65b8db8449b970490f0f974d8, type: 3}
   shopAfterObstacles: 25
+  shopActive: 0
 --- !u!1 &1703432936
 GameObject:
   m_ObjectHideFlags: 0
