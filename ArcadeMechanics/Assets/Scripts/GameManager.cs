@@ -112,8 +112,7 @@ public class GameManager : MonoBehaviour
 
         FindObjectOfType<TerrainManager>().ResetTerrain();
         FindObjectOfType<ObstacleManager>().ResetObstacles();
-        FindObjectOfType<PlayerMovement>().ResetPlayerMovement();
-        FindObjectOfType<PlayerAttack>().ResetPlayerAttack();
+        FindObjectOfType<PlayerMovement>().ResetPlayer();
         FindObjectOfType<CameraMovement>().ResetCamera();
         playerHealth.ResetHealth();
         FindObjectOfType<BackgroundManager>().ResetBackground();
