@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
+        //Increase speed
         if(!obstacleManager.bossActive && !playerMovement.speedingUp)
         {
             float newSpeed = score / speedIncreaseAt * speedIncrease;
