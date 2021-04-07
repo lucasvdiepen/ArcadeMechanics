@@ -1379,7 +1379,7 @@ MonoBehaviour:
   speed: 5
   jumpForce: 7
   wallOffset: 1
-  playerRunAutomatic: 0
+  playerRunAutomatic: 1
   freezeMovement: 0
   speedUpTime: 1.1
   speedingUp: 0
