@@ -23,6 +23,28 @@ public class GameManager : MonoBehaviour
 
     private float currentSpeed = 0;
 
+    [HideInInspector] public int coins = 0;
+
+    public void AddCoins(int amount)
+    {
+        coins += amount;
+
+        UpdateCoinText();
+    }
+
+    public void RemoveCoins(int amount)
+    {
+        coins -= amount;
+        if (coins < 0) coins = 0;
+
+        UpdateCoinText();
+    }
+
+    private void UpdateCoinText()
+    {
+        //Update coin text here
+    }
+
     void Start()
     {
         highscore = PlayerPrefs.GetInt("Highscore", 0);
@@ -35,7 +57,14 @@ public class GameManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Pause();
+            if (FindObjectOfType<PlayerShop>().shopIsOpened)
+            {
+                FindObjectOfType<PlayerShop>().CloseShop();
+            }
+            else
+            {
+                Pause();
+            }
         }
 
         if(!obstacleManager.bossActive && !playerMovement.speedingUp)

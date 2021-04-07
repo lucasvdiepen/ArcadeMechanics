@@ -49,7 +49,7 @@ public class CameraMovement : MonoBehaviour
                 if(movingTo == MovingTo.Enemy)
                 {
                     moveSmooth = false;
-                    FindObjectOfType<ObstacleManager>().SmoothCameraAnimationToEnemyDone();
+                    FindObjectOfType<ObstacleManager>().SmoothCameraAnimationToObstacleDone();
                 }
                 else if(movingTo == MovingTo.Player)
                 {
@@ -87,7 +87,7 @@ public class CameraMovement : MonoBehaviour
         SetCameraToTarget();
     }
 
-    public void MoveSmoothToEnemy(float targetX)
+    public void MoveSmoothToObstacle(float targetX)
     {
         FindObjectOfType<PlayerMovement>().freezeMovement = true;
         startPositionX = transform.position.x + distanceToEgde;

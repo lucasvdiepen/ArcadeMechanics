@@ -9,9 +9,15 @@ public class PlayerAttack : MonoBehaviour
 
     public TextMeshProUGUI ammoText;
 
+    [HideInInspector] public bool shootingAllowed = true;
+
+    [HideInInspector] public int totalBullets = 0;
+
     private GameObject gun;
     private Gun gunScript;
     private PlayerMovement playerMovement;
+
+    [HideInInspector] public int bullets = 0;
 
     private void Start()
     {
@@ -24,7 +30,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.F))
             {
-                gunScript.Shoot(playerMovement.lastMoveDirection);
+                if(shootingAllowed) gunScript.Shoot(playerMovement.lastMoveDirection);
             }
 
             if(Input.GetKeyDown(KeyCode.R))
@@ -34,9 +40,9 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public void UpdateAmmoText(int bullets)
+    public void UpdateAmmoText()
     {
-        ammoText.text = "Ammo: " + bullets;
+        ammoText.text = totalBullets + " | " + bullets;
     }
 
     public void SetGun(GameObject newGun)
@@ -47,6 +53,34 @@ public class PlayerAttack : MonoBehaviour
         gun.transform.parent = gunHolder.transform;
         gun.transform.localPosition = Vector3.zero;
         gunScript = gun.GetComponent<Gun>();
+    }
+
+    public void AddBullets(int amount)
+    {
+        totalBullets += amount;
+
+        UpdateAmmoText();
+    }
+
+    public void RemoveBullets(int amount)
+    {
+        totalBullets -= amount;
+        if (totalBullets < 0) totalBullets = 0;
+
+        UpdateAmmoText();
+    }
+
+    public int GetReloadAmount(int maxBullets)
+    {
+        if (totalBullets >= maxBullets) return maxBullets;
+        else return totalBullets;
+    }
+
+    public void SetLoadedBullets(int _bullets)
+    {
+        bullets = _bullets;
+
+        UpdateAmmoText();
     }
 
     private void DestroyGun()
@@ -62,6 +96,9 @@ public class PlayerAttack : MonoBehaviour
     public void ResetPlayerAttack()
     {
         DestroyGun();
-        UpdateAmmoText(0);
+        totalBullets = 0;
+        bullets = 0;
+        UpdateAmmoText();
+        shootingAllowed = true;
     }
 }
