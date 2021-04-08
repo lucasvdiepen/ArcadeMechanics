@@ -131,7 +131,7 @@ public class ObstacleManager : MonoBehaviour
         }
 
         //Check if player passed the boss last position
-        if (cameraLeftPosition.x >= bossLastPosition.x + bossKilledResumeOffset && bossKilled && obstacleType == ObstacleType.Boss)
+        if (cameraLeftPosition.x >= bossLastPosition.x + bossKilledResumeOffset && bossKilled && (obstacleType == ObstacleType.Boss || obstacleType == ObstacleType.ObstacleBoss))
         {
             ObstacleDone();
         }
@@ -154,7 +154,7 @@ public class ObstacleManager : MonoBehaviour
 
     public void BossKilled(Vector3 lastPosition)
     {
-        if (obstacleType == ObstacleType.Boss)
+        if (obstacleType == ObstacleType.Boss || obstacleType == ObstacleType.ObstacleBoss)
         {
             if (activeObstacles.Count > 0) activeObstacles.RemoveAt(activeObstacles.Count - 1);
 
