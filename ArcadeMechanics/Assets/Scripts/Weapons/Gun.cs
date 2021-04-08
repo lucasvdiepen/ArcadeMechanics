@@ -56,7 +56,7 @@ public class Gun : MonoBehaviour
             if (timeElapsed >= reloadTime)
             {
                 //Reload
-                bullets = bulletsToReload;
+                bullets += bulletsToReload;
 
                 FindObjectOfType<PlayerAttack>().SetLoadedBullets(bullets);
 
@@ -94,7 +94,10 @@ public class Gun : MonoBehaviour
     {
         if (bullets != startingBullets && !isReloading)
         {
-            bulletsToReload = FindObjectOfType<PlayerAttack>().GetReloadAmount(startingBullets);
+            int reloadBullets = startingBullets - bullets;
+            if (reloadBullets <= 0) reloadBullets = startingBullets;
+
+            bulletsToReload = FindObjectOfType<PlayerAttack>().GetReloadAmount(reloadBullets);
             if (bulletsToReload != 0)
             {
                 timeElapsed = 0;
