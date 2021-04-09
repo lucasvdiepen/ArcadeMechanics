@@ -203,7 +203,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f097eb0d31b83eb4eb6607a1b839deee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDelay: 1
+  minAttackDelay: 1
+  maxAttackDelay: 2
+  changeAttackDelayEveryAttack: 1
   minDamage: 10
   maxDamage: 25
   canAttack: 0
