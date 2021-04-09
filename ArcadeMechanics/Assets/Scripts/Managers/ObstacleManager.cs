@@ -24,6 +24,10 @@ public class ObstacleManager : MonoBehaviour
     public float obstacleSmoothCameraStartAtDistance = 5.3f;
     public float obstacleCameraRightOffset = 2f;
 
+    public int coinSpawnChance = 75;
+
+    public float coinSpawnHeight = 1f;
+
     private ObstacleType obstacleType;
 
     [Header("Bosses")]
@@ -273,6 +277,14 @@ public class ObstacleManager : MonoBehaviour
             GameObject obstacle = Instantiate(obstacles[rndIndex]);
             obstacle.transform.position = new Vector3(lastObstacleX, obstacle.transform.position.y, obstacle.transform.position.z);
             obstacle.transform.Translate(new Vector3(rndDistance, 0, 0));
+
+            //Spawn coin above obstacle
+            if(Random.Range(0, 101) <= coinSpawnChance)
+            {
+                Debug.Log("Should spawn coin");
+                FindObjectOfType<CoinsManager>().SpawnCoin(obstacle.transform.position.x, obstacle.transform.position.y + coinSpawnHeight, false);
+            }
+
             lastObstacleX = obstacle.transform.position.x;
             activeObstacles.Add(obstacle);
             spawnedObstacles++;
