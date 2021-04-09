@@ -2967,7 +2967,7 @@ MonoBehaviour:
   speed: 5
   jumpForce: 7
   wallOffset: 1
-  playerRunAutomatic: 0
+  playerRunAutomatic: 1
   freezeMovement: 0
   speedUpTime: 1.1
   speedingUp: 0
@@ -3889,6 +3889,8 @@ MonoBehaviour:
   bossKilledResumeOffset: 2
   bossActive: 0
   obstacleBossChance: 50
+  minBossKilledCoins: 18
+  maxBossKilledCoins: 25
   shop: {fileID: 4202583619622687825, guid: 5759c6a65b8db8449b970490f0f974d8, type: 3}
   shopAfterObstacles: 25
   shopActive: 0

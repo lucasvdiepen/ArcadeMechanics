@@ -43,6 +43,9 @@ public class ObstacleManager : MonoBehaviour
     [Range(0, 100)]
     public int obstacleBossChance = 50;
 
+    public int minBossKilledCoins = 18;
+    public int maxBossKilledCoins = 25;
+
     private Vector3 bossLastPosition = Vector3.zero;
     private bool bossKilled = false;
 
@@ -163,6 +166,8 @@ public class ObstacleManager : MonoBehaviour
             if (activeObstacles.Count > 0) activeObstacles.RemoveAt(activeObstacles.Count - 1);
 
             bossLastPosition = lastPosition;
+
+            FindObjectOfType<CoinsManager>().CoinExplosion(bossLastPosition.x, bossLastPosition.y, Random.Range(minBossKilledCoins, maxBossKilledCoins + 1));
 
             //if player past the camera center the camera should smoothly move to the player
             if (player.position.x > mainCamera.position.x) FindObjectOfType<CameraMovement>().MoveSmoothToPlayer();
