@@ -147,5 +147,6 @@ public class GameManager : MonoBehaviour
         playerHealth.ResetHealth();
         FindObjectOfType<BackgroundManager>().ResetBackground();
         FindObjectOfType<CloudsManager>().ResetClouds();
+        FindObjectOfType<CoinsManager>().ResetCoins();
     }
 }

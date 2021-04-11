@@ -286,7 +286,6 @@ public class ObstacleManager : MonoBehaviour
             //Spawn coin above obstacle
             if(Random.Range(0, 101) <= coinSpawnChance)
             {
-                Debug.Log("Should spawn coin");
                 FindObjectOfType<CoinsManager>().SpawnCoin(obstacle.transform.position.x, obstacle.transform.position.y + coinSpawnHeight, false);
             }
 
