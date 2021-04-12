@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SettingsMenuScript : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class SettingsMenuScript : MonoBehaviour
 
     public Slider BGMSlider;
     public Slider SFXSlider;
+
+    public TextMeshProUGUI BGMText;
+    public TextMeshProUGUI SFXText;
 
     public Button backButton;
 
@@ -24,6 +28,15 @@ public class SettingsMenuScript : MonoBehaviour
         settingsIsOpen = true;
         settingsCanvas.SetActive(true);
     }
+    private void Start()
+    {
+        float BGMSliderPrefs = PlayerPrefs.GetFloat("BGMSlider", 50);
+        float SFXSliderPrefs = PlayerPrefs.GetFloat("SFXSlider", 50);
+        BGMSlider.value = BGMSliderPrefs;
+        SFXSlider.value = SFXSliderPrefs;
+        SFXChanged(SFXSliderPrefs);
+        BGMChanged(BGMSliderPrefs);
+    }
 
     private void BackButtonClicked()
     {
@@ -33,24 +46,29 @@ public class SettingsMenuScript : MonoBehaviour
 
     public void BGMChanged(float value)
     {
-        Debug.Log("BGM Volume set to " + value);
-
+        BGMSliderVolume = value;
+        FindObjectOfType<SoundmanagerScript>().ChangeBGMVolume(BGMSliderVolume);
+        BGMText.text = value + "%";
+        PlayerPrefs.SetFloat("BGMSlider", value);
+        PlayerPrefs.Save();
     }
     public void SFXChanged(float value)
     {
-        Debug.Log("SFX Volume set to " + value);
+        SFXSliderVolume = value;
+        FindObjectOfType<SoundmanagerScript>().ChangeSFXVolume(SFXSliderVolume);
+        SFXText.text = value + "%";
+        PlayerPrefs.SetFloat("SFXSlider", value);
+        PlayerPrefs.Save();
     }
     public void OnBGMSliderChanged()
     {
         BGMChanged(BGMSlider.value);
-        BGMSliderVolume = BGMSlider.value;
-        FindObjectOfType<SoundmanagerScript>().ChangeBGMVolume(BGMSliderVolume);
+        
     }
     public void OnSFXSliderChanged()
     {
         SFXChanged(SFXSlider.value);
-        SFXSliderVolume = SFXSlider.value;
-        FindObjectOfType<SoundmanagerScript>().ChangeSFXVolume(SFXSliderVolume);
+        
     }
     private void OnEnable()
     {

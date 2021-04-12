@@ -821,7 +821,6 @@ MonoBehaviour:
   BGM:
   - {fileID: 8300000, guid: 1973bd184fe6c824c9eddafa94a751e3, type: 3}
   - {fileID: 8300000, guid: 4ae269f3003712143bd41a13bf4ccc9d, type: 3}
-  GetVolume: {fileID: 0}
   BGMVolume: 0
   SFXVolume: 0
   sfxSource: {fileID: 565801076}
@@ -2116,6 +2115,8 @@ MonoBehaviour:
   BGMSliderVolume: 0
   BGMSlider: {fileID: 1396136788}
   SFXSlider: {fileID: 2000592417}
+  BGMText: {fileID: 248624609}
+  SFXText: {fileID: 1251209301}
   backButton: {fileID: 2047689303}
   settingsCanvas: {fileID: 2016780685}
   settingsIsOpen: 0
