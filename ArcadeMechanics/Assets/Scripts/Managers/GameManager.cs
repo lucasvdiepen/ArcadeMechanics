@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highscoreText;
     public Canvas pauseScreen;
+    public GameObject gameOver;
 
     private int score = 0;
     private int highscore = 0;
@@ -120,7 +121,7 @@ public class GameManager : MonoBehaviour
     public void Die()
     {
         FindObjectOfType<SoundmanagerScript>().PlayDeathSounds();
-        ResetGame();
+        gameOver.SetActive(true);
     }
 
     private void ResetGame()
