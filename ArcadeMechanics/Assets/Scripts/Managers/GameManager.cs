@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
     {
         FindObjectOfType<SoundmanagerScript>().PlayDeathSounds();
         gameOver.SetActive(true);
+        FindObjectOfType<PlayerMovement>().freezeMovement = true;
     }
 
     private void ResetGame()
