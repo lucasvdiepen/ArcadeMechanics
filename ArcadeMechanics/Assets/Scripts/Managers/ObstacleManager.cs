@@ -24,6 +24,10 @@ public class ObstacleManager : MonoBehaviour
     public float obstacleSmoothCameraStartAtDistance = 5.3f;
     public float obstacleCameraRightOffset = 2f;
 
+    public int coinSpawnChance = 75;
+
+    public float coinSpawnHeight = 1f;
+
     private ObstacleType obstacleType;
 
     [Header("Bosses")]
@@ -38,6 +42,9 @@ public class ObstacleManager : MonoBehaviour
 
     [Range(0, 100)]
     public int obstacleBossChance = 50;
+
+    public int minBossKilledCoins = 18;
+    public int maxBossKilledCoins = 25;
 
     private Vector3 bossLastPosition = Vector3.zero;
     private bool bossKilled = false;
@@ -160,6 +167,8 @@ public class ObstacleManager : MonoBehaviour
 
             bossLastPosition = lastPosition;
 
+            FindObjectOfType<CoinsManager>().CoinExplosion(bossLastPosition.x, bossLastPosition.y, Random.Range(minBossKilledCoins, maxBossKilledCoins + 1));
+
             //if player past the camera center the camera should smoothly move to the player
             if (player.position.x > mainCamera.position.x) FindObjectOfType<CameraMovement>().MoveSmoothToPlayer();
             else SmoothCameraAnimationToPlayerDone();
@@ -273,6 +282,13 @@ public class ObstacleManager : MonoBehaviour
             GameObject obstacle = Instantiate(obstacles[rndIndex]);
             obstacle.transform.position = new Vector3(lastObstacleX, obstacle.transform.position.y, obstacle.transform.position.z);
             obstacle.transform.Translate(new Vector3(rndDistance, 0, 0));
+
+            //Spawn coin above obstacle
+            if(Random.Range(0, 101) <= coinSpawnChance)
+            {
+                FindObjectOfType<CoinsManager>().SpawnCoin(obstacle.transform.position.x, obstacle.transform.position.y + coinSpawnHeight, false);
+            }
+
             lastObstacleX = obstacle.transform.position.x;
             activeObstacles.Add(obstacle);
             spawnedObstacles++;

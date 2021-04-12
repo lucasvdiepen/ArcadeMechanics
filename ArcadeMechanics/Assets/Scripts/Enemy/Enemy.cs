@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float attackDelay = 1f;
+    private float attackDelay = 1f;
+
+    public float minAttackDelay = 1f;
+    public float maxAttackDelay = 1f;
+
+    public bool changeAttackDelayEveryAttack = false;
 
     public int minDamage = 5;
     public int maxDamage = 15;
@@ -15,6 +20,11 @@ public class Enemy : MonoBehaviour
 
     private int lookingDirection = -1;
 
+    private void Start()
+    {
+        attackDelay = Random.Range(minAttackDelay, maxAttackDelay);
+    }
+
     public bool CanAttack()
     {
         if (canAttack)
@@ -23,6 +33,8 @@ public class Enemy : MonoBehaviour
             if (time > (lastAttackTime + attackDelay))
             {
                 lastAttackTime = time;
+
+                if (changeAttackDelayEveryAttack) attackDelay = Random.Range(minAttackDelay, maxAttackDelay);
                 return true;
             }
         }

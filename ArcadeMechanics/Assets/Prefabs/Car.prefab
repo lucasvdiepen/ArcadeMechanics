@@ -585,6 +585,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDelay: 7
+  minAttackDelay: 7
+  maxAttackDelay: 7
+  changeAttackDelayEveryAttack: 0
   minDamage: 15
   maxDamage: 30
   canAttack: 0

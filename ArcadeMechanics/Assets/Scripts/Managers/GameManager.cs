@@ -77,8 +77,6 @@ public class GameManager : MonoBehaviour
 
                 obstacleManager.minObstacleDistance = currentSpeed + obstacleManager.startingMinObstacleDistance;
                 obstacleManager.maxObstacleDistance = currentSpeed + obstacleManager.startingMaxObstacleDistance;
-
-                Debug.Log("New speed: " + currentSpeed);
             }
         }
 
@@ -139,6 +137,8 @@ public class GameManager : MonoBehaviour
         score = 0;
         scoreText.text = "Score: " + score;
 
+        coins = 0;
+
         FindObjectOfType<TerrainManager>().ResetTerrain();
         FindObjectOfType<ObstacleManager>().ResetObstacles();
         FindObjectOfType<PlayerMovement>().ResetPlayerMovement();
@@ -147,5 +147,6 @@ public class GameManager : MonoBehaviour
         playerHealth.ResetHealth();
         FindObjectOfType<BackgroundManager>().ResetBackground();
         FindObjectOfType<CloudsManager>().ResetClouds();
+        FindObjectOfType<CoinsManager>().ResetCoins();
     }
 }
