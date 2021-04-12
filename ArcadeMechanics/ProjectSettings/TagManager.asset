@@ -6,12 +6,6 @@ TagManager:
   tags:
   - Ground
   - Obstacle
-<<<<<<< HEAD
-=======
-  - Enemy
-  - Shop
-  - Coin
->>>>>>> development
   layers:
   - Default
   - TransparentFX
