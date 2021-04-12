@@ -8,16 +8,59 @@ public class SoundmanagerScript : MonoBehaviour
     public AudioClip[] JumpSounds;
     public AudioClip[] DeathSounds;
     public AudioClip[] BGM;
-    private AudioSource source;
+
     public GameObject GetVolume;
-    float BGMVolume = 0.5f;
-    float SFXVolume = 0.5f;
+    public float BGMVolume;
+    public float SFXVolume;
+
+    private AudioSource sfxSource;
+    private AudioSource bgmSource;
 
     private static SoundmanagerScript soundManager;
 
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+    
+        StartCoroutine(StartBGMMusic());
+        StartBGMMusic();
+    }
+    public void ChangeSFXVolume(float value)
+    {
+        SFXVolume = value * 0.01f;
+    }
+    public void ChangeBGMVolume(float value)
+    {
+        BGMVolume = value * 0.01f;
+    }
+    public void PlayJumpSounds()
+    {
+        sfxSource.clip = JumpSounds [Random.Range(0, JumpSounds.Length)];
+        sfxSource.volume = SFXVolume;
+        sfxSource.PlayOneShot(sfxSource.clip);
+    }
+    public void PlayDeathSounds()
+    {
+        sfxSource.clip = DeathSounds[Random.Range(0, DeathSounds.Length)];
+        sfxSource.volume = SFXVolume;
+        sfxSource.PlayOneShot(sfxSource.clip);
+    }
+    public IEnumerator StartBGMMusic()
+    {
+        while (true)
+        {
+            AudioClip audioClip = BGM[Random.Range(0, BGM.Length)];
+            bgmSource.clip = audioClip;
+            bgmSource.volume = BGMVolume;
+            bgmSource.PlayOneShot(bgmSource.clip);
+            yield return new WaitForSeconds(audioClip.length);
+        }
+    }
     private void Awake()
     {
-        if(!soundManager)
+        if (!soundManager)
         {
             DontDestroyOnLoad(gameObject);
             soundManager = this;
@@ -27,46 +70,4 @@ public class SoundmanagerScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-        source = GetComponent<AudioSource>();
-        StartCoroutine(StartBGMMusic());
-        StartBGMMusic();
-
-    }
-    public void ChangeSFXVolume(float value)
-    {
-        BGMVolume = value;
-    }
-    public void ChangeBGMVolume(float value)
-    {
-        SFXVolume = value;
-    }
-
-    public void PlayJumpSounds()
-    {
-        source.clip = JumpSounds [Random.Range(0, JumpSounds.Length)];
-        source.volume = SFXVolume;
-        source.PlayOneShot(source.clip);
-    }
-    public void PlayDeathSounds()
-    {
-        source.clip = DeathSounds[Random.Range(0, DeathSounds.Length)];
-        source.volume = SFXVolume;
-        source.PlayOneShot(source.clip);
-    }
-    public IEnumerator StartBGMMusic()
-    {
-        while (true)
-        {
-            AudioClip audioClip = BGM[Random.Range(0, BGM.Length)];
-            source.clip = audioClip;
-            source.volume = BGMVolume;
-            source.PlayOneShot(source.clip);
-            yield return new WaitForSeconds(audioClip.length);
-        }
-    }    
 }

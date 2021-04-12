@@ -19,19 +19,6 @@ public class SettingsMenuScript : MonoBehaviour
 
     [HideInInspector] public bool settingsIsOpen = false;
 
-    private void Awake()
-    {
-        if(!settingsMenuScript)
-        {
-            DontDestroyOnLoad(gameObject);
-            settingsMenuScript = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     public void ShowSettings()
     {
         settingsIsOpen = true;
@@ -47,22 +34,23 @@ public class SettingsMenuScript : MonoBehaviour
     public void BGMChanged(float value)
     {
         Debug.Log("BGM Volume set to " + value);
-        FindObjectOfType<SoundmanagerScript>().ChangeBGMVolume(value);
+
     }
     public void SFXChanged(float value)
     {
         Debug.Log("SFX Volume set to " + value);
-        FindObjectOfType<SoundmanagerScript>().ChangeSFXVolume(value);
     }
     public void OnBGMSliderChanged()
     {
         BGMChanged(BGMSlider.value);
         BGMSliderVolume = BGMSlider.value;
+        FindObjectOfType<SoundmanagerScript>().ChangeBGMVolume(BGMSliderVolume);
     }
     public void OnSFXSliderChanged()
     {
         SFXChanged(SFXSlider.value);
         SFXSliderVolume = SFXSlider.value;
+        FindObjectOfType<SoundmanagerScript>().ChangeSFXVolume(SFXSliderVolume);
     }
     private void OnEnable()
     {
@@ -75,6 +63,18 @@ public class SettingsMenuScript : MonoBehaviour
     {
         BGMSlider.onValueChanged.RemoveAllListeners();
         SFXSlider.onValueChanged.RemoveAllListeners();
+    }
+    private void Awake()
+    {
+        if(!settingsMenuScript)
+        {
+            DontDestroyOnLoad(gameObject);
+            settingsMenuScript = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
