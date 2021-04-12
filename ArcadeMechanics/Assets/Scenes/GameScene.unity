@@ -454,7 +454,7 @@ RectTransform:
   - {fileID: 446511567}
   - {fileID: 1745913202}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -699,7 +699,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &280364597
 GameObject:
@@ -1229,7 +1229,7 @@ RectTransform:
   - {fileID: 593287275}
   - {fileID: 619133790}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3014,7 +3014,7 @@ Transform:
   - {fileID: 1914491373}
   - {fileID: 1652671318}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1256849779
 Rigidbody2D:
@@ -3226,7 +3226,7 @@ RectTransform:
   - {fileID: 837990802}
   - {fileID: 1779998353}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3651,7 +3651,7 @@ RectTransform:
   - {fileID: 513289190}
   - {fileID: 1474445158}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3878,6 +3878,8 @@ MonoBehaviour:
   spawnObstacleOffset: 1
   obstacleSmoothCameraStartAtDistance: 5.3
   obstacleCameraRightOffset: 2
+  coinSpawnChance: 75
+  coinSpawnHeight: 1.3
   obstacleBosses:
   - {fileID: 8481317505086264708, guid: 110bc53900ac95d41b42405bf492cbeb, type: 3}
   - {fileID: 737232364073932342, guid: 5d0f34594f1d0024eaaa5c09a17bda76, type: 3}
@@ -3887,6 +3889,8 @@ MonoBehaviour:
   bossKilledResumeOffset: 2
   bossActive: 0
   obstacleBossChance: 50
+  minBossKilledCoins: 18
+  maxBossKilledCoins: 25
   shop: {fileID: 4202583619622687825, guid: 5759c6a65b8db8449b970490f0f974d8, type: 3}
   shopAfterObstacles: 25
   shopActive: 0
@@ -4427,6 +4431,54 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1915864235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1915864237}
+  - component: {fileID: 1915864236}
+  m_Layer: 0
+  m_Name: CoinManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1915864236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915864235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 729fdec7ca1f68b41a692636092e941c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coin: {fileID: 7121245807141077145, guid: 1b150d226437be94ea1b656b0f3af73f, type: 3}
+  minXVelocity: -4
+  maxXVelocity: 4
+  minYVelocity: 6
+  maxYVelocity: 10
+--- !u!4 &1915864237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915864235}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5053784, y: -0.6571927, z: -4.403243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1986310144
 GameObject:
   m_ObjectHideFlags: 0
@@ -4773,7 +4825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4105700382744463364, guid: 57780a985c668044ca9afcd83a70691f, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4105700382744463364, guid: 57780a985c668044ca9afcd83a70691f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4830,7 +4882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6360574808938649047, guid: b2e0df2ff613def40b1777b0301810f7, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6360574808938649047, guid: b2e0df2ff613def40b1777b0301810f7, type: 3}
       propertyPath: m_LocalPosition.x
