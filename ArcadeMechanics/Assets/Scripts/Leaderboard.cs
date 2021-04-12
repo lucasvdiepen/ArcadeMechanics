@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 public class Leaderboard : MonoBehaviour
 {
-    public TextMeshProUGUI[] leaderboardScores;
-    public TextMeshProUGUI[] leaderboardNames;
     public int highscore;
 
     public int maxLeaderboardSpots = 10;
 
     [HideInInspector] public Score[] leaderboard;
+
+    public static Leaderboard leaderboardInstance;
     
     public class Score
     {
@@ -24,6 +24,19 @@ public class Leaderboard : MonoBehaviour
         {
             score = _score;
             name = _name;
+        }
+    }
+
+    private void Awake()
+    {
+        if (!leaderboardInstance)
+        {
+            DontDestroyOnLoad(gameObject);
+            leaderboardInstance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -81,16 +94,8 @@ public class Leaderboard : MonoBehaviour
         }
     }
 
-    public void UpdateLeaderboardOnScreen()
-    {
-
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
         LoadLeaderboard();
-
-        UpdateLeaderboardOnScreen();
     }
 }
