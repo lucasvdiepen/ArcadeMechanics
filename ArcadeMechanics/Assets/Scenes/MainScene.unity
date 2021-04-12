@@ -787,8 +787,8 @@ GameObject:
   m_Component:
   - component: {fileID: 565801077}
   - component: {fileID: 565801076}
-  - component: {fileID: 565801075}
   - component: {fileID: 565801078}
+  - component: {fileID: 565801075}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -824,6 +824,8 @@ MonoBehaviour:
   GetVolume: {fileID: 0}
   BGMVolume: 0
   SFXVolume: 0
+  sfxSource: {fileID: 565801076}
+  bgmSource: {fileID: 565801078}
 --- !u!82 &565801076
 AudioSource:
   m_ObjectHideFlags: 0
