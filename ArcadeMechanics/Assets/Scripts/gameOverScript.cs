@@ -23,7 +23,7 @@ public class gameOverScript : MonoBehaviour
 
     private void restartButtonClicked()
     {
-        SceneManager.LoadScene("GameScene");
+        FindObjectOfType<GameManager>().ResetGame();
     }
 
     private void OnEnable()

@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<PlayerMovement>().freezeMovement = true;
     }
 
-    private void ResetGame()
+    public void ResetGame()
     {
         //Check if score is better than highscore
         if(score > highscore)
@@ -140,6 +140,8 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
 
         coins = 0;
+
+        gameOver.SetActive(false);
 
         FindObjectOfType<TerrainManager>().ResetTerrain();
         FindObjectOfType<ObstacleManager>().ResetObstacles();
