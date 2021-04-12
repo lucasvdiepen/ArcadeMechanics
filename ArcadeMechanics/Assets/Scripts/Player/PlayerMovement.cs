@@ -133,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
         speed = startingSpeed;
         transform.position = startPosition;
         transform.rotation = Quaternion.Euler(0, 0, 0);
+        freezeMovement = false;
         playerRunAutomatic = true;
         grounded = false;
     }

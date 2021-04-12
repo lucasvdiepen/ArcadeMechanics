@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highscoreText;
     public Canvas pauseScreen;
+    public GameObject gameOver;
 
     private int score = 0;
     private int highscore = 0;
@@ -120,10 +121,11 @@ public class GameManager : MonoBehaviour
     public void Die()
     {
         FindObjectOfType<SoundmanagerScript>().PlayDeathSounds();
-        ResetGame();
+        gameOver.SetActive(true);
+        FindObjectOfType<PlayerMovement>().freezeMovement = true;
     }
 
-    private void ResetGame()
+    public void ResetGame()
     {
         //Check if score is better than highscore
         if(score > highscore)
@@ -138,6 +140,8 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
 
         coins = 0;
+
+        gameOver.SetActive(false);
 
         FindObjectOfType<TerrainManager>().ResetTerrain();
         FindObjectOfType<ObstacleManager>().ResetObstacles();
