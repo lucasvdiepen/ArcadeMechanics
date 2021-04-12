@@ -11,7 +11,11 @@ public class LeaderboardNameInput : MonoBehaviour
 
     private void SubmitButtonClicked()
     {
+        int currentScore = FindObjectOfType<GameManager>().score;
 
+        string name = nameInput.text;
+
+        FindObjectOfType<Leaderboard>().UpdateLeaderboard(currentScore, name);
     }
 
     private void OnEnable()

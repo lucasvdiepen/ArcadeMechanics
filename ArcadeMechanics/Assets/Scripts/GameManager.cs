@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public Text highscoreText;
     public Canvas pauseScreen;
 
-    private int score = 0;
+    [HideInInspector] public int score = 0;
     private int highscore = 0;
     public bool isPaused = false;
 

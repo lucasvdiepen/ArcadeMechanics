@@ -40,6 +40,11 @@ public class Leaderboard : MonoBehaviour
         }
     }
 
+    public int GetLowestScore()
+    {
+        return leaderboard[maxLeaderboardSpots - 1].score;
+    }
+
     public void UpdateLeaderboard(int newScore, string newName)
     {
         Score currentScore = new Score(newScore, newName);
