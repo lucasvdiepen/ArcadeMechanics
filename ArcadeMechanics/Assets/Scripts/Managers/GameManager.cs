@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public Canvas pauseScreen;
     public GameObject gameOver;
 
-    private int score = 0;
+    [HideInInspector] public int score = 0;
     private int highscore = 0;
     public bool isPaused = false;
     public int speedIncreaseAt = 50;
