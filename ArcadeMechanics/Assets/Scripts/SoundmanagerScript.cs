@@ -8,41 +8,67 @@ public class SoundmanagerScript : MonoBehaviour
     public AudioClip[] JumpSounds;
     public AudioClip[] DeathSounds;
     public AudioClip[] BGM;
-    private AudioSource source;
-    float BGMVolume = 0.3f;
-    float SFXVolume = 0.5f;
 
+    //public GameObject GetVolume;
+    public float BGMVolume;
+    public float SFXVolume;
+
+    public AudioSource sfxSource;
+    public AudioSource bgmSource;
+
+    private static SoundmanagerScript soundManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        source = GetComponent<AudioSource>();
         StartCoroutine(StartBGMMusic());
         StartBGMMusic();
-
     }
-
+    public void ChangeSFXVolume(float value)
+    {
+        float newVolume = value * 0.01f;
+        sfxSource.volume = newVolume;
+        SFXVolume = value * 0.01f;
+    }
+    public void ChangeBGMVolume(float value)
+    {
+        float newVolume = value * 0.01f;
+        bgmSource.volume = newVolume;
+        BGMVolume = newVolume;
+    }
     public void PlayJumpSounds()
     {
-        source.clip = JumpSounds [Random.Range(0, JumpSounds.Length)];
-        source.volume = SFXVolume;
-        source.PlayOneShot(source.clip);
+        sfxSource.clip = JumpSounds [Random.Range(0, JumpSounds.Length)];
+        sfxSource.volume = SFXVolume;
+        sfxSource.PlayOneShot(sfxSource.clip);
     }
     public void PlayDeathSounds()
     {
-        source.clip = DeathSounds[Random.Range(0, DeathSounds.Length)];
-        source.volume = SFXVolume;
-        source.PlayOneShot(source.clip);
+        sfxSource.clip = DeathSounds[Random.Range(0, DeathSounds.Length)];
+        sfxSource.volume = SFXVolume;
+        sfxSource.PlayOneShot(sfxSource.clip);
     }
     public IEnumerator StartBGMMusic()
     {
         while (true)
         {
             AudioClip audioClip = BGM[Random.Range(0, BGM.Length)];
-            source.clip = audioClip;
-            source.volume = BGMVolume;
-            source.PlayOneShot(source.clip);
+            bgmSource.clip = audioClip;
+            bgmSource.volume = BGMVolume;
+            bgmSource.PlayOneShot(bgmSource.clip);
             yield return new WaitForSeconds(audioClip.length);
         }
-    }    
+    }
+    private void Awake()
+    {
+        if (!soundManager)
+        {
+            DontDestroyOnLoad(gameObject);
+            soundManager = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 }

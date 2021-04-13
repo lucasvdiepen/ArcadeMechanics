@@ -13,4 +13,8 @@ public class MainMenuScript : MonoBehaviour
     {
         Application.Quit();
     }
+    public void SettingsButton()
+    {
+        FindObjectOfType<SettingsMenuScript>().ShowSettings();
+    }
 }
