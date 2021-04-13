@@ -32,8 +32,8 @@ public class CoinsManager : MonoBehaviour
 
                 if ((activeCoins[i].transform.position.x + coinDespawnOffset) < cameraLeftPosition.x)
                 {
-                    activeCoins.RemoveAt(i);
                     Destroy(activeCoins[i]);
+                    activeCoins.RemoveAt(i);
                 }
             }
         }
