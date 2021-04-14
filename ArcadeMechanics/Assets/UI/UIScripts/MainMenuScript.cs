@@ -9,6 +9,12 @@ public class MainMenuScript : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    public void LeaderboardButton()
+    {
+        SceneManager.LoadScene("Leaderboard");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
