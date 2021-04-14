@@ -59,15 +59,22 @@ public class GameManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!nameInputCanvas.active)
+            if(!nameInputCanvas.activeSelf)
             {
-                if (FindObjectOfType<PlayerShop>().shopIsOpened)
+                if(FindObjectOfType<SettingsMenuScript>().settingsIsOpen)
                 {
-                    FindObjectOfType<PlayerShop>().CloseShop();
+                    FindObjectOfType<SettingsMenuScript>().CloseSettings();
                 }
                 else
                 {
-                    Pause();
+                    if (FindObjectOfType<PlayerShop>().shopIsOpened)
+                    {
+                        FindObjectOfType<PlayerShop>().CloseShop();
+                    }
+                    else
+                    {
+                        Pause();
+                    }
                 }
             }
         }

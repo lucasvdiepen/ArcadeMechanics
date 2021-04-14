@@ -40,6 +40,11 @@ public class SettingsMenuScript : MonoBehaviour
 
     private void BackButtonClicked()
     {
+        CloseSettings();
+    }
+
+    public void CloseSettings()
+    {
         settingsIsOpen = false;
         settingsCanvas.SetActive(false);
     }

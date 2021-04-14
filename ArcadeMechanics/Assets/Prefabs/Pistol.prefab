@@ -162,8 +162,8 @@ MonoBehaviour:
   fireRate: 0.5
   startingBullets: 7
   reloadTime: 1.5
-  minDamage: 5
-  maxDamage: 15
+  minDamage: 12
+  maxDamage: 18
   bulletSpeed: 12
   bulletSize: 3
   gunScale: {x: 0.5, y: 0.5, z: 0.5}

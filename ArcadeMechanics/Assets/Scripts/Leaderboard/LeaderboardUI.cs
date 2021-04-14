@@ -21,8 +21,6 @@ public class LeaderboardUI : MonoBehaviour
     {
         Leaderboard.Score[] leaderboard = FindObjectOfType<Leaderboard>().GetLeaderboard();
 
-        Debug.Log(leaderboard.Length);
-
         for (int i = 0; i < leaderboardScores.Length; i++)
         {
             leaderboardScores[i].text = leaderboard[i].score.ToString();
@@ -30,7 +28,20 @@ public class LeaderboardUI : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitLeaderboard();
+        }
+    }
+
     private void BackButtonClicked()
+    {
+        ExitLeaderboard();
+    }
+
+    private void ExitLeaderboard()
     {
         SceneManager.LoadScene("MainScene");
     }
