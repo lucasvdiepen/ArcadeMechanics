@@ -43,8 +43,6 @@ public class PlayerMovement : MonoBehaviour
             speed = Mathf.Lerp(startingSpeed, oldSpeed, timeElapsed / speedUpTime);
             if (timeElapsed >= speedUpTime) speedingUp = false;
 
-            Debug.Log(speed);
-
             timeElapsed += Time.deltaTime;
         }
 

@@ -125,7 +125,13 @@ public class ObstacleManager : MonoBehaviour
                     }
                     smoothCamera = true;
 
+                    //Set speed for player
                     FindObjectOfType<PlayerMovement>().StartObstacle();
+
+                    //Starts hint
+                    FindObjectOfType<HintManager>().StartObstacleHint(obstacleType);
+
+                    //Starts smooth camera move
                     FindObjectOfType<CameraMovement>().MoveSmoothToObstacle(lastObstacle.transform.position.x + obstacleCameraRightOffset);
                 }
 

@@ -19,6 +19,8 @@ public class PlayerAttack : MonoBehaviour
 
     [HideInInspector] public int bullets = 0;
 
+    [HideInInspector] public bool hasGun = false;
+
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -53,6 +55,8 @@ public class PlayerAttack : MonoBehaviour
         gun.transform.parent = gunHolder.transform;
         gun.transform.localPosition = Vector3.zero;
         gunScript = gun.GetComponent<Gun>();
+
+        hasGun = true;
     }
 
     public void AddBullets(int amount)
@@ -90,6 +94,8 @@ public class PlayerAttack : MonoBehaviour
             Destroy(gun);
             gun = null;
             gunScript = null;
+
+            hasGun = false;
         }
     }
 
