@@ -1806,8 +1806,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5954,6 +5954,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7477467228814248127, guid: 7a6ce605d42e79e448edad2263484df1, type: 3}
+      propertyPath: backButton
+      value: 
+      objectReference: {fileID: 2045376479}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a6ce605d42e79e448edad2263484df1, type: 3}
 --- !u!224 &1790173309 stripped
