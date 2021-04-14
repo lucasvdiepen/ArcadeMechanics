@@ -66,7 +66,7 @@ public class ObstacleManager : MonoBehaviour
 
     private bool smoothCamera = false;
 
-    private enum ObstacleType
+    public enum ObstacleType
     {
         ObstacleBoss,
         Boss,
