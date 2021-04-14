@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI highscoreText;
     public Canvas pauseScreen;
     public GameObject gameOver;
+    public GameObject nameInputCanvas;
 
     [HideInInspector] public int score = 0;
     private int highscore = 0;
@@ -58,13 +59,16 @@ public class GameManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if (FindObjectOfType<PlayerShop>().shopIsOpened)
+            if(!nameInputCanvas.active)
             {
-                FindObjectOfType<PlayerShop>().CloseShop();
-            }
-            else
-            {
-                Pause();
+                if (FindObjectOfType<PlayerShop>().shopIsOpened)
+                {
+                    FindObjectOfType<PlayerShop>().CloseShop();
+                }
+                else
+                {
+                    Pause();
+                }
             }
         }
 
@@ -121,8 +125,13 @@ public class GameManager : MonoBehaviour
     public void Die()
     {
         FindObjectOfType<SoundmanagerScript>().PlayDeathSounds();
-        gameOver.SetActive(true);
         FindObjectOfType<PlayerMovement>().freezeMovement = true;
+        gameOver.SetActive(true);
+        
+        if (score > FindObjectOfType<Leaderboard>().GetLowestScore())
+        {
+            nameInputCanvas.SetActive(true);
+        }
     }
 
     public void ResetGame()
