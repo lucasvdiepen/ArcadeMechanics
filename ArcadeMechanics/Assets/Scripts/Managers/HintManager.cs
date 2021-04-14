@@ -16,7 +16,7 @@ public class HintManager : MonoBehaviour
 
     public float hintPlayTime = 4f;
 
-    private bool isClosing = false;
+    //private bool isClosing = false;
 
     private void Start()
     {
@@ -28,7 +28,7 @@ public class HintManager : MonoBehaviour
         string newHintText = "";
         string newHintSubText = "";
 
-        string moveText = "Use W A S D SPACE to move";
+        string moveText = "Use W A S D and SPACE to move";
 
         //Determines what hint text should show
         if(obstacleType == ObstacleManager.ObstacleType.Boss)
@@ -69,55 +69,25 @@ public class HintManager : MonoBehaviour
 
             hintHolder.SetActive(true);
 
-            lastHintPlayTime = Time.time;
-
             hintText.text = _hintText;
             hintSubText.text = _hintSubText;
 
-            //hintText.color = new Color32((byte)(hintText.color.r * 255), (byte)(hintText.color.g * 255), (byte)(hintText.color.b * 255), 255);
-            //hintSubText.color = new Color32((byte)(hintSubText.color.r * 255), (byte)(hintSubText.color.g * 255), (byte)(hintSubText.color.b * 255), 255);
-
-            Color32 newHintTextColor = hintText.color;
-            newHintTextColor.a = (byte)255;
-
-            hintText.color = newHintTextColor;
-
-            Color32 newHintSubTextColor = hintSubText.color;
-            newHintSubTextColor.a = (byte)255;
-
-            hintSubText.color = newHintSubTextColor;
-
-            animator.SetTrigger("Fade_In");
+            animator.SetTrigger("FadeEffect");
 
             hintIsPlaying = true;
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if(hintIsPlaying)
         {
             //Check when animation is done
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("HintDone"))
             {
-                if (hintHolder.activeSelf && isClosing)
-                {
-                    isClosing = false;
-                    hintHolder.SetActive(false);
-
-                    hintIsPlaying = false;
-                    Debug.Log("HintDone");
-                }
-            }
-
-            //Check if hint text should stop showing
-            float time = Time.time;
-            if (time >= (lastHintPlayTime + hintPlayTime) && !isClosing && hintIsPlaying)
-            {
-                Debug.Log("Hint is closing now");
-                isClosing = true;
-
-                animator.SetTrigger("Fade_Out");
+                hintIsPlaying = false;
+                hintHolder.SetActive(false);
+                Debug.Log("HintDone");
             }
         }
     }
