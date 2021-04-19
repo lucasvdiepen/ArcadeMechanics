@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public int coins = 0;
 
+    private bool isDead = false;
+
     public void AddCoins(int amount)
     {
         coins += amount;
@@ -131,13 +133,18 @@ public class GameManager : MonoBehaviour
 
     public void Die()
     {
-        FindObjectOfType<SoundmanagerScript>().PlayDeathSounds();
-        FindObjectOfType<PlayerMovement>().freezeMovement = true;
-        gameOver.SetActive(true);
-        
-        if (score > FindObjectOfType<Leaderboard>().GetLowestScore())
+        if(!isDead)
         {
-            nameInputCanvas.SetActive(true);
+            isDead = true;
+
+            FindObjectOfType<SoundmanagerScript>().PlayDeathSounds();
+            FindObjectOfType<PlayerMovement>().freezeMovement = true;
+            gameOver.SetActive(true);
+
+            if (score > FindObjectOfType<Leaderboard>().GetLowestScore())
+            {
+                nameInputCanvas.SetActive(true);
+            }
         }
     }
 
@@ -156,6 +163,8 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
 
         coins = 0;
+
+        isDead = false;
 
         gameOver.SetActive(false);
 

@@ -10,6 +10,14 @@ public class LeaderboardNameInput : MonoBehaviour
 
     public Button submitButton;
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            SubmitButtonClicked();
+        }
+    }
+
     private void SubmitButtonClicked()
     {
         int currentScore = FindObjectOfType<GameManager>().score;
