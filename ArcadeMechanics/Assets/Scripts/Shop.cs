@@ -12,6 +12,8 @@ public class Shop : MonoBehaviour
     public Button pistolButton;
     public Button akButton;
 
+    public Button backButton;
+
     public GameObject pistol;
     public GameObject ak;
 
@@ -39,6 +41,7 @@ public class Shop : MonoBehaviour
         bulletsButton.onClick.AddListener(BuyBullets);
         pistolButton.onClick.AddListener(BuyPistol);
         akButton.onClick.AddListener(BuyAK);
+        backButton.onClick.AddListener(BackButtonClicked);
 
         UpdateCoinsText();
     }
@@ -48,6 +51,12 @@ public class Shop : MonoBehaviour
         bulletsButton.onClick.RemoveAllListeners();
         pistolButton.onClick.RemoveAllListeners();
         akButton.onClick.RemoveAllListeners();
+        backButton.onClick.RemoveAllListeners();
+    }
+
+    private void BackButtonClicked()
+    {
+        FindObjectOfType<PlayerShop>().CloseShop();
     }
 
     private void UpdateCoinsText()
@@ -76,11 +85,6 @@ public class Shop : MonoBehaviour
     private TextMeshProUGUI[] GetCostText(Button btn)
     {
         return btn.GetComponentsInChildren<TextMeshProUGUI>();
-    }
-
-    public void ExitButton()
-    {
-        FindObjectOfType<PlayerShop>().CloseShop();
     }
 
     public void BuyBullets()

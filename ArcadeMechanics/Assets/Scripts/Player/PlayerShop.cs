@@ -14,7 +14,7 @@ public class PlayerShop : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.F))
         {
-            if(shopIsInRange && !shopIsOpened)
+            if(shopIsInRange && !shopIsOpened && !FindObjectOfType<GameManager>().isPaused)
             {
                 //Open shop dialog here
                 OpenShop();
