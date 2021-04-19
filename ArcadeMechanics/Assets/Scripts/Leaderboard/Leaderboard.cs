@@ -45,6 +45,11 @@ public class Leaderboard : MonoBehaviour
         return leaderboard;
     }
 
+    public int GetHighestScore()
+    {
+        return leaderboard[0].score;
+    }
+
     public int GetLowestScore()
     {
         return leaderboard[maxLeaderboardSpots - 1].score;

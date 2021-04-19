@@ -18,10 +18,11 @@ public class GameManager : MonoBehaviour
     public GameObject nameInputCanvas;
 
     [HideInInspector] public int score = 0;
-    private int highscore = 0;
     public bool isPaused = false;
     public int speedIncreaseAt = 50;
     public float speedIncrease = 0.15f;
+
+    public int maxSpeedIncrease = 10;
 
     private float currentSpeed = 0;
 
@@ -51,8 +52,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        highscore = PlayerPrefs.GetInt("Highscore", 0);
-        highscoreText.text = "Highscore: " + highscore;
+        highscoreText.text = "Highscore: " + FindObjectOfType<Leaderboard>().GetHighestScore();
     }
 
     void Update()
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 
         if(!obstacleManager.bossActive && !obstacleManager.shopActive && !playerMovement.speedingUp)
         {
-            float newSpeed = score / speedIncreaseAt * speedIncrease;
+            float newSpeed = Mathf.Clamp(score / speedIncreaseAt * speedIncrease, 0, maxSpeedIncrease);
             if(currentSpeed != newSpeed)
             {
                 currentSpeed = newSpeed;
@@ -91,6 +91,9 @@ public class GameManager : MonoBehaviour
 
                 obstacleManager.minObstacleDistance = currentSpeed + obstacleManager.startingMinObstacleDistance;
                 obstacleManager.maxObstacleDistance = currentSpeed + obstacleManager.startingMaxObstacleDistance;
+
+                obstacleManager.minLongObstacleDistance = currentSpeed + obstacleManager.startingMinLongObstacleDistance;
+                obstacleManager.maxLongObstacleDistance = currentSpeed + obstacleManager.startingMaxLongObstacleDistance;
             }
         }
 
@@ -150,13 +153,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        //Check if score is better than highscore
-        if(score > highscore)
-        {
-            highscore = score;
-            highscoreText.text = "Highscore: " + highscore;
-            PlayerPrefs.SetInt("Highscore", score);
-        }
+        highscoreText.text = "Highscore: " + FindObjectOfType<Leaderboard>().GetHighestScore();
 
         //reset game
         score = 0;

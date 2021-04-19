@@ -14,8 +14,16 @@ public class ObstacleManager : MonoBehaviour
     public float startingMinObstacleDistance = 6f;
     public float startingMaxObstacleDistance = 15f;
 
+    public float startingMinLongObstacleDistance = 20f;
+    public float startingMaxLongObstacleDistance = 25f;
+
     [HideInInspector] public float minObstacleDistance = 6f;
     [HideInInspector] public float maxObstacleDistance = 15f;
+
+    [HideInInspector] public float minLongObstacleDistance = 20f;
+    [HideInInspector] public float maxLongObstacleDistance = 25f;
+
+    public int longObstacleChance = 15;
 
     private float lastObstacleX = 0f;
 
@@ -77,6 +85,9 @@ public class ObstacleManager : MonoBehaviour
     {
         minObstacleDistance = startingMinObstacleDistance;
         maxObstacleDistance = startingMaxObstacleDistance;
+
+        minLongObstacleDistance = startingMinLongObstacleDistance;
+        maxLongObstacleDistance = startingMaxLongObstacleDistance;
     }
 
     void Update()
@@ -118,11 +129,19 @@ public class ObstacleManager : MonoBehaviour
                 //Check when the camera should start to move smoothly to the obstacle
                 if (cameraRightPosition.x >= lastObstacle.transform.position.x - obstacleSmoothCameraStartAtDistance && !smoothCamera)
                 {
-                    if (activeObstacles.Count > 1)
+                    if(activeObstacles.Count > 0)
                     {
-                        Destroy(activeObstacles[activeObstacles.Count - 2]);
-                        activeObstacles.RemoveAt(activeObstacles.Count - 2);
+                        for (int i = activeObstacles.Count - 1; i >= 0; i--)
+                        {
+                            //Should not destroy the enemy or shop
+                            if (activeObstacles[i].transform.tag != "Enemy" && activeObstacles[i].transform.tag != "Shop")
+                            {   
+                                Destroy(activeObstacles[i]);
+                                activeObstacles.RemoveAt(i);
+                            }
+                        }
                     }
+
                     smoothCamera = true;
 
                     //Set speed for player
@@ -283,7 +302,18 @@ public class ObstacleManager : MonoBehaviour
         if(shouldSpawn)
         {
             int rndIndex = Random.Range(0, obstacles.Length);
-            float rndDistance = Random.Range(minObstacleDistance, maxObstacleDistance);
+
+            float rndDistance = 0;
+
+            if(Random.Range(0, 101) <= longObstacleChance)
+            {
+                rndDistance = Random.Range(minLongObstacleDistance, maxLongObstacleDistance);
+                Debug.Log("Long obstacle");
+            }
+            else
+            {
+                rndDistance = Random.Range(minObstacleDistance, maxObstacleDistance);
+            }
 
             GameObject obstacle = Instantiate(obstacles[rndIndex]);
             obstacle.transform.position = new Vector3(lastObstacleX, obstacle.transform.position.y, obstacle.transform.position.z);
