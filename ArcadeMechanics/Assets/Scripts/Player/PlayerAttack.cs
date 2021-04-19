@@ -56,6 +56,11 @@ public class PlayerAttack : MonoBehaviour
         gun.transform.localPosition = Vector3.zero;
         gunScript = gun.GetComponent<Gun>();
 
+        if(playerMovement.lastMoveDirection == -1)
+        {
+            gun.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+
         hasGun = true;
     }
 
